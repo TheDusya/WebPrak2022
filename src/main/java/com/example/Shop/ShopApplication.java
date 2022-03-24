@@ -12,12 +12,7 @@ public class ShopApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ShopApplication.class, args);
-		//Thread.currentThread().setContextClassLoader(ClassLoader);
-		List<TableClient> clients = DAOFactory.getInstance().getCDAO().getAllClients();
-		if (clients != null) {
-			for (TableClient person : clients) {
-				System.out.println("u");
-			}
-		}
+
+
 	}
 }
