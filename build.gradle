@@ -24,7 +24,7 @@ dependencies {
 	implementation 'com.h2database:h2:2.1.210'
 	implementation 'org.apache.tomcat:tomcat-dbcp:10.0.16'
 	testImplementation 'org.testng:testng:7.5'
-
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2'
 
 
 }
