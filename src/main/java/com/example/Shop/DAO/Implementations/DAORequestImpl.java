@@ -37,7 +37,7 @@ public class DAORequestImpl implements DAORequest {
     }
 
     @Override
-    public TableRequest getRequestByID(Integer Id) {
+    public TableRequest getRequestByID(Long Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<TableRequest> query = session.createQuery("FROM TableRequest WHERE request_id = :thisID", TableRequest.class)
                 .setParameter("thisID", Id);
@@ -58,7 +58,7 @@ public class DAORequestImpl implements DAORequest {
     }
 
     @Override
-    public List<TableRequest> getRequestsByClientID(Integer Id) {
+    public List<TableRequest> getRequestsByClientID(Long Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<TableRequest> query = session.createQuery("FROM TableRequest WHERE client_id = :thisID", TableRequest.class)
                 .setParameter("thisID", Id);

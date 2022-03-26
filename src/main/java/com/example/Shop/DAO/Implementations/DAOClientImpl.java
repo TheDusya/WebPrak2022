@@ -1,7 +1,7 @@
 package com.example.Shop.DAO.Implementations;
 
 import com.example.Shop.DAO.DAOClient;
-import com.example.Shop.tables.TableClient;
+import com.example.Shop.tables.Client;
 import com.example.Shop.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -11,7 +11,7 @@ import java.util.List;
 public class DAOClientImpl implements DAOClient {
 
     @Override
-    public void addClient(TableClient client) {
+    public void addClient(Client client) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(client);
@@ -20,7 +20,7 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
-    public void updateClient(TableClient client) {
+    public void updateClient(Client client) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(client);
@@ -29,7 +29,7 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
-    public void deleteClient(TableClient client) {
+    public void deleteClient(Client client) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.delete(client);
@@ -38,9 +38,9 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
-    public List<TableClient> getClientByName(String name) {
+    public List<Client> getClientByName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableClient> query = session.createQuery("FROM TableClient WHERE real_name LIKE :thisName", TableClient.class)
+        Query<Client> query = session.createQuery("FROM Client WHERE real_name LIKE :thisName", Client.class)
                 .setParameter("thisName", "%" + name + "%");
         if (query.getResultList().size() == 0) {
             return null;
@@ -49,9 +49,9 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
-    public TableClient getClientByID(Integer Id) {
+    public Client getClientByID(Long Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableClient> query = session.createQuery("FROM TableClient WHERE client_id = :thisID", TableClient.class)
+        Query<Client> query = session.createQuery("FROM Client WHERE client_id = :thisID", Client.class)
                 .setParameter("thisID", Id);
         if (query.getResultList().size() == 0) {
             return null;
@@ -60,9 +60,9 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
-    public List<TableClient> getAllClients() {
+    public List<Client> getAllClients() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableClient> query = session.createQuery("FROM TableClient", TableClient.class);
+        Query<Client> query = session.createQuery("FROM Client", Client.class);
         if (query.getResultList().size() == 0) {
             return null;
         }

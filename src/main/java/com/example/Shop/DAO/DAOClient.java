@@ -1,17 +1,16 @@
 package com.example.Shop.DAO;
 
-import com.example.Shop.tables.TableClient;
-import com.example.Shop.tables.tech_type;
+import com.example.Shop.tables.Client;
 
 import java.util.List;
 
 public interface DAOClient {
-    void addClient(TableClient client);
-    void updateClient(TableClient client);
-    void deleteClient(TableClient client);
+    void addClient(Client client);
+    void updateClient(Client client);
+    void deleteClient(Client client);
 
-    TableClient getClientByID (Integer client_ID);
-    List<TableClient> getClientByName (String name);
-    List<TableClient> getAllClients ();
+    Client getClientByID (Long client_ID);
+    List<Client> getClientByName (String name);
+    List<Client> getAllClients ();
     //List<TableClient> getClientsByCity (String City);
 }

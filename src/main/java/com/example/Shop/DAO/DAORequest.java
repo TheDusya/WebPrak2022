@@ -9,9 +9,9 @@ public interface DAORequest {
     void updateRequest(TableRequest request);
     void deleteRequest(TableRequest request);
 
-    TableRequest getRequestByID (Integer request_ID);
+    TableRequest getRequestByID (Long request_ID);
     List<TableRequest> getAllRequests ();
-    List<TableRequest> getRequestsByClientID (Integer client_ID);
+    List<TableRequest> getRequestsByClientID (Long client_ID);
 
 
 }

@@ -1,4 +1,4 @@
-package com.example.Shop.tables;
+package com.example.Shop.types;
 
 public enum request_state {
     issued,

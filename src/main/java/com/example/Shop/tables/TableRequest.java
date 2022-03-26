@@ -1,5 +1,7 @@
 package com.example.Shop.tables;
 
+import com.example.Shop.jsons.JsonAddress;
+import com.example.Shop.types.request_state;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -22,7 +24,7 @@ public class TableRequest {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "client_id")
     @ToString.Exclude
-    private TableClient client_id;
+    private Client client_id;
 
     @Column (name = "cur_state")
     private request_state cur_state;

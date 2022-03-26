@@ -11,10 +11,12 @@
         <property name="connection.password">111111</property>
         <property name="show_sql">true</property>
 
-        <mapping class="com.example.Shop.tables.TableClient"/>
-        <mapping class="com.example.Shop.tables.TableGood"/>
-        <mapping class="com.example.Shop.tables.TableGoodBought"/>
+        <mapping class="com.example.Shop.tables.Client"/>
+        <mapping class="com.example.Shop.tables.Good"/>
+        <mapping class="com.example.Shop.tables.GoodBought"/>
         <mapping class="com.example.Shop.tables.TableRequest"/>
 
+
     </session-factory>
+
 </hibernate-configuration>

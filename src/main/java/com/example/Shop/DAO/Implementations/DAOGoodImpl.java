@@ -1,8 +1,8 @@
 package com.example.Shop.DAO.Implementations;
 
 import com.example.Shop.DAO.DAOGood;
-import com.example.Shop.tables.TableGood;
-import com.example.Shop.tables.tech_type;
+import com.example.Shop.tables.Good;
+import com.example.Shop.types.tech_type;
 import com.example.Shop.util.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DAOGoodImpl implements DAOGood {
     @Override
-    public void addGood(TableGood good) {
+    public void addGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.save(good);
@@ -20,7 +20,7 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public void updateGood(TableGood good) {
+    public void updateGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.update(good);
@@ -29,7 +29,7 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public void deleteGood(TableGood good) {
+    public void deleteGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         session.delete(good);
@@ -38,9 +38,9 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public TableGood getGoodByID(Integer Id) {
+    public Good getGoodByID(Long Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableGood> query = session.createQuery("FROM TableGood WHERE good_id = :thisID", TableGood.class)
+        Query<Good> query = session.createQuery("FROM Good WHERE good_id = :thisID", Good.class)
                 .setParameter("thisID", Id);
         if (query.getResultList().size() == 0) {
             return null;
@@ -49,9 +49,9 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public List<TableGood> getAllGoods() {
+    public List<Good> getAllGoods() {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableGood> query = session.createQuery("FROM TableGood", TableGood.class);
+        Query<Good> query = session.createQuery("FROM Good", Good.class);
         if (query.getResultList().size() == 0) {
             return null;
         }
@@ -59,9 +59,9 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public List<TableGood> getGoodsByCountry(String name) {
+    public List<Good> getGoodsByCountry(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableGood> query = session.createQuery("FROM TableGood WHERE country LIKE :thisCountry", TableGood.class)
+        Query<Good> query = session.createQuery("FROM Good WHERE country LIKE :thisCountry", Good.class)
                 .setParameter("thisCountry", name );
         if (query.getResultList().size() == 0) {
             return null;
@@ -70,9 +70,9 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public List<TableGood> getGoodsByManufacturer(String name) {
+    public List<Good> getGoodsByManufacturer(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableGood> query = session.createQuery("FROM TableGood WHERE manufacturer LIKE :thisManufacturer", TableGood.class)
+        Query<Good> query = session.createQuery("FROM Good WHERE manufacturer LIKE :thisManufacturer", Good.class)
                 .setParameter("thisManufacturer", name );
         if (query.getResultList().size() == 0) {
             return null;
@@ -81,9 +81,9 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
-    public List<TableGood> getGoodsByKind(tech_type tech_kind) {
+    public List<Good> getGoodsByKind(tech_type tech_kind) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<TableGood> query = session.createQuery("FROM TableGood WHERE kind = :thiskind", TableGood.class)
+        Query<Good> query = session.createQuery("FROM Good WHERE kind = :thiskind", Good.class)
                 .setParameter("thiskind", tech_kind);
         if (query.getResultList().size() == 0) {
             return null;

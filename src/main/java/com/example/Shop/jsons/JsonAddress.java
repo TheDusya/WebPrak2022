@@ -1,4 +1,4 @@
-package com.example.Shop.tables;
+package com.example.Shop.jsons;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

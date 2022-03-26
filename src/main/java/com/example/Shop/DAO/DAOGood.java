@@ -1,18 +1,18 @@
 package com.example.Shop.DAO;
 
-import com.example.Shop.tables.TableGood;
-import com.example.Shop.tables.tech_type;
+import com.example.Shop.tables.Good;
+import com.example.Shop.types.tech_type;
 
 import java.util.List;
 
 public interface DAOGood {
-    void addGood(TableGood good);
-    void updateGood(TableGood good);
-    void deleteGood(TableGood good);
+    void addGood(Good good);
+    void updateGood(Good good);
+    void deleteGood(Good good);
 
-    TableGood getGoodByID (Integer good_ID);
-    List<TableGood> getAllGoods ();
-    List<TableGood> getGoodsByKind (tech_type kind);
-    List<TableGood> getGoodsByManufacturer (String manufacturer);
-    List<TableGood> getGoodsByCountry (String country);
+    Good getGoodByID (Long good_ID);
+    List<Good> getAllGoods ();
+    List<Good> getGoodsByKind (tech_type kind);
+    List<Good> getGoodsByManufacturer (String manufacturer);
+    List<Good> getGoodsByCountry (String country);
 }

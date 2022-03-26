@@ -12,7 +12,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @ToString
 @Table(name = "good_bought")
-public class TableGoodBought {
+public class GoodBought {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="good_bought_id", unique=true, nullable=false)
@@ -26,7 +26,7 @@ public class TableGoodBought {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "good_id")
     @ToString.Exclude
-    private TableGood good_id;
+    private Good good_id;
 
     @Column(name = "amount")
     private Integer amount;

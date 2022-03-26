@@ -1,12 +1,18 @@
 package com.example.Shop.tables;
 
 
+import com.example.Shop.types.tech_type;
+import com.example.Shop.util.HashMapConverter;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -14,9 +20,10 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@SuppressWarnings("JpaAttributeTypeInspection")
 @Table(name = "good")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
-public class TableGood {
+public class Good {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="good_id", unique=true, nullable=false)
@@ -32,8 +39,11 @@ public class TableGood {
     private tech_type kind;
 
     @Column (name = "chars")
-    @Type(type = "jsonb")
-    private JsonTech chars;
+    private String chars;
+
+    @Column
+    @Convert(converter = HashMapConverter.class)
+    private Map<String, Object> charsAttributes;
 
     @Column (name = "price")
     private Integer price;
