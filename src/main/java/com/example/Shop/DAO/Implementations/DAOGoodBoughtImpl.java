@@ -1,13 +1,18 @@
 package com.example.Shop.DAO.Implementations;
 
+import com.example.Shop.DAO.DAOGood;
 import com.example.Shop.DAO.DAOGoodBought;
+import com.example.Shop.DAO.Factory.DAOFactory;
+import com.example.Shop.tables.Good;
 import com.example.Shop.tables.GoodBought;
 import com.example.Shop.util.HibernateUtil;
+import lombok.Getter;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
 
+@Getter
 public class DAOGoodBoughtImpl implements DAOGoodBought {
 
     @Override
@@ -61,7 +66,7 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
     @Override
     public List<GoodBought> getGoodsBoughtByGoodID(Long Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE good_id = :thisID", GoodBought.class)
+        Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE good.good_id = :thisID", GoodBought.class)
                 .setParameter("thisID", Id);
         if (query.getResultList().size() == 0) {
             return null;
@@ -72,12 +77,23 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
     @Override
     public List<GoodBought> getGoodsBoughtByRequestID(Long Id) {
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE request_id = :thisID", GoodBought.class)
+        Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE request.request_id = :thisID", GoodBought.class)
                 .setParameter("thisID", Id);
         if (query.getResultList().size() == 0) {
             return null;
         }
         return query.getResultList();
+    }
+    
+    @Override
+    public Integer sumCosts(List<GoodBought> list){
+        DAOGood dao = DAOFactory.getInstance().getGDAO();
+        Integer ans = 0;
+        for (GoodBought goodBought : list) {
+            Good good = goodBought.getGood();
+            ans+= goodBought.getAmount()*good.getPrice();
+        }
+        return ans;
     }
 
 }

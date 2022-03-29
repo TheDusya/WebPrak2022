@@ -20,15 +20,24 @@ public class GoodBought {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "request_id")
+    @NonNull
     @ToString.Exclude
-    private TableRequest request_id;
+    private Request request;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn (name = "good_id")
+    @NonNull
     @ToString.Exclude
-    private Good good_id;
+    private Good good;
 
     @Column(name = "amount")
     private Integer amount;
+
+    //*
+    public Long getGoodBought_id() { return good_bought_id; }
+    public Request getRequest() { return request; }
+    public Good getGood() { return good; }
+    public Integer getAmount() { return amount; }
+    //*/
 }
 

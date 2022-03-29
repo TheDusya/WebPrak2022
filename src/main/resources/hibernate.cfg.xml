@@ -14,7 +14,7 @@
         <mapping class="com.example.Shop.tables.Client"/>
         <mapping class="com.example.Shop.tables.Good"/>
         <mapping class="com.example.Shop.tables.GoodBought"/>
-        <mapping class="com.example.Shop.tables.TableRequest"/>
+        <mapping class="com.example.Shop.tables.Request"/>
 
 
     </session-factory>

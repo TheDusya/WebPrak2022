@@ -13,4 +13,5 @@ public interface DAOGoodBought {
     List<GoodBought> getAllGoodsBought ();
     List<GoodBought> getGoodsBoughtByGoodID (Long good_id);
     List<GoodBought> getGoodsBoughtByRequestID (Long request_id);
+    Integer sumCosts (List<GoodBought> list);
 }

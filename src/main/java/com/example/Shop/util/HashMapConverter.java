@@ -14,30 +14,30 @@ import java.util.Map;
 public class HashMapConverter implements AttributeConverter<Map<String, Object>, String> {
 
     @Override
-    public String convertToDatabaseColumn(Map<String, Object> customerInfo) {
+    public String convertToDatabaseColumn(Map<String, Object> Info) {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        String customerInfoJson = null;
+        String InfoJson = null;
         try {
-            customerInfoJson = objectMapper.writeValueAsString(customerInfo);
+            InfoJson = objectMapper.writeValueAsString(Info);
         } catch (final JsonProcessingException e) {
             System.out.println(e.getMessage());
         }
 
-        return customerInfoJson;
+        return InfoJson;
     }
 
     @Override
-    public Map<String, Object> convertToEntityAttribute(String customerInfoJSON) {
+    public Map<String, Object> convertToEntityAttribute(String InfoJSON) {
         ObjectMapper objectMapper = new ObjectMapper();
-        Map<String, Object> customerInfo = null;
+        Map<String, Object> Info = null;
         try {
-            customerInfo = objectMapper.readValue(customerInfoJSON, Map.class);
+            Info = objectMapper.readValue(InfoJSON, Map.class);
         } catch (final IOException e) {
             System.out.println(e.getMessage());
         }
 
-        return customerInfo;
+        return Info;
     }
 
 }

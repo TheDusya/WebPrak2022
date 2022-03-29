@@ -1,16 +1,11 @@
 package com.example.Shop.tables;
 
 import javax.persistence.*;
-
 import com.example.Shop.util.HashMapConverter;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.TypeDef;
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -18,7 +13,6 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @SuppressWarnings("JpaAttributeTypeInspection")
 @Table(name = "client")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
@@ -45,10 +39,36 @@ public class Client {
 
     @Column (name = "address")
     @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> Attributes;
+    private Map<String, Object> address;
 
     @Column (length = 16, name = "phone")
     private String phone;
 
+    ///*
+    public Long getClient_id() { return client_id; }
+    public String getLogin() { return login; }
+    public String getPass() { return pass; }
+    public String getReal_name() { return real_name; }
+    public Boolean getIs_admin() { return is_admin; }
+    public String getAddress() { return address.toString(); }
+    public String getMail() { return mail; }
+    public String getPhone() { return phone; }
+    //*/
+
+    @Override
+    public String toString() {
+        if (is_admin) return "Admin [ID=" + client_id +
+                ", login=" + login +
+                ", name=" + real_name +
+                ", mail=" + mail +
+                ", address=" + address +
+                ", phone=" + phone + "]";
+        else return "Client [ID=" + client_id +
+                ", login=" + login +
+                ", name=" + real_name +
+                ", mail=" + mail +
+                ", address=" + address +
+                ", phone=" + phone + "]";
+    }
 }
 

@@ -1,17 +1,12 @@
 package com.example.Shop.tables;
 
-
+import javax.persistence.*;
 import com.example.Shop.types.tech_type;
 import com.example.Shop.util.HashMapConverter;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.TypeDef;
 
-import javax.persistence.*;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Entity
@@ -19,7 +14,6 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @SuppressWarnings("JpaAttributeTypeInspection")
 @Table(name = "good")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
@@ -35,15 +29,13 @@ public class Good {
     @Column (length = 64, nullable = false, name = "model")
     private String model;
 
+    @Enumerated(EnumType.STRING)
     @Column (name = "kind")
     private tech_type kind;
 
     @Column (name = "chars")
-    private String chars;
-
-    @Column
     @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> charsAttributes;
+    private Map<String, Object> chars;
 
     @Column (name = "price")
     private Integer price;
@@ -53,4 +45,28 @@ public class Good {
 
     @Column (length = 64,name = "country")
     private String country;
+
+    ///*
+    public Long getGood_id() { return good_id; }
+    public String getManufacturer() { return manufacturer; }
+    public String getModel() { return model; }
+    public tech_type getKind() { return kind; }
+    public String getChars() { return chars.toString(); }
+    public Integer getPrice() { return price; }
+    public Integer getIn_stock() { return in_stock; }
+    public String getCountry() { return country; }
+    //*/
+
+    @Override
+    public String toString() {
+        return "Good [ID=" + good_id +
+                ", manufacturer=" + manufacturer +
+                ", model=" + model +
+                ", kind=" + kind +
+                ", characteristics=" + chars +
+                ", price=" + price +
+                ", in_stock=" + in_stock +
+                ", country=" + country + "]";
+
+    }
 }

@@ -9,7 +9,6 @@ import org.hibernate.query.Query;
 import java.util.List;
 
 public class DAOClientImpl implements DAOClient {
-
     @Override
     public void addClient(Client client) {
         Session session = HibernateUtil.getSessionFactory().openSession();
