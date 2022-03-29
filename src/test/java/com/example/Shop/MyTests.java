@@ -40,7 +40,7 @@ public class MyTests {
     @Test
     public void testSomeRequest() {
         DAORequest dao = DAOFactory.getInstance().getRDAO();
-        Request request = dao.getRequestByID(Long.valueOf(3));
+        Request request = dao.getRequestByID(Long.valueOf(1));
         System.out.println(request);
     }
 }

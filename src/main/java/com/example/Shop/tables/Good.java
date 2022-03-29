@@ -14,6 +14,7 @@ import java.util.Map;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @SuppressWarnings("JpaAttributeTypeInspection")
 @Table(name = "good")
 @TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)

@@ -10,7 +10,8 @@ public interface DAOClient {
     void deleteClient(Client client);
 
     Client getClientByID (Long client_ID);
-    List<Client> getClientByName (String name);
+    Client getClientByLogin (String name);
+    List<Client> getClientsByName (String name);
     List<Client> getAllClients ();
     //List<TableClient> getClientsByCity (String City);
 }

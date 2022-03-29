@@ -11,27 +11,30 @@ import java.util.Map;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @SuppressWarnings("JpaAttributeTypeInspection")
 @Table(name = "client")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
+@TypeDef(name = "json", typeClass = JsonBinaryType.class)
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="client_id", unique=true, nullable=false)
     private Long client_id;
 
+    @NonNull
     @Column (length = 128, nullable = false, name = "login")
     private String login;
 
+    @NonNull
     @Column (length = 128, nullable = false, name = "pass")
     private String pass;
 
     @Column (length = 128, name = "real_name")
     private String real_name;
 
-    @Column (name = "is_admin")
+    @NonNull
+    @Column (name = "is_admin", nullable = false)
     private Boolean is_admin;
 
     @Column (length = 320, name = "mail")
@@ -54,6 +57,19 @@ public class Client {
     public String getMail() { return mail; }
     public String getPhone() { return phone; }
     //*/
+    ///*
+    public void setClient_id(Long id) { client_id = id; }
+    public void setPass(String pass) { this.pass = pass; }
+    public void setReal_name(String name) { real_name = name; }
+    public void setIs_admin(boolean is) { is_admin = is; }
+    public void setAddress(String address)
+    {
+        HashMapConverter hashMapConverter = new HashMapConverter();
+        this.address = hashMapConverter.convertToEntityAttribute(address);
+    }
+    public void setMail(String mail) { this.mail = mail; }
+    public void setPhone(String phone) { this.phone = phone; }
+    //*/
 
     @Override
     public String toString() {
@@ -70,5 +86,14 @@ public class Client {
                 ", address=" + address +
                 ", phone=" + phone + "]";
     }
+
+    public Client(String l, String p, boolean a){
+        login = l;
+        pass = p;
+        is_admin = a;
+        address = null;
+    }
+    public Client(){}
 }
+
 

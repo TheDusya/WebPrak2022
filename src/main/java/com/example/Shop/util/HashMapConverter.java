@@ -13,9 +13,10 @@ import java.util.Map;
 @Converter
 public class HashMapConverter implements AttributeConverter<Map<String, Object>, String> {
 
+
     @Override
     public String convertToDatabaseColumn(Map<String, Object> Info) {
-
+        if (Info == null) return  null;
         ObjectMapper objectMapper = new ObjectMapper();
         String InfoJson = null;
         try {
@@ -29,6 +30,7 @@ public class HashMapConverter implements AttributeConverter<Map<String, Object>,
 
     @Override
     public Map<String, Object> convertToEntityAttribute(String InfoJSON) {
+        if (InfoJSON == null) return null;
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> Info = null;
         try {

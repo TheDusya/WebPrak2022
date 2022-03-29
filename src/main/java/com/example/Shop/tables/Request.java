@@ -7,18 +7,22 @@ import com.example.Shop.jsons.JsonAddress;
 import com.example.Shop.types.request_state;
 import com.example.Shop.tables.Client;
 import com.example.Shop.types.tech_type;
+import com.example.Shop.util.HashMapConverter;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
+@SuppressWarnings("JpaAttributeTypeInspection")
 @ToString
 @Table(name = "request")
 public class Request {
@@ -46,8 +50,8 @@ public class Request {
     private Integer delivery_cost;
 
     @Column (name = "delivery_address")
-    @Type(type = "jsonb")
-    private JsonAddress delivery_address;
+    @Convert(converter = HashMapConverter.class)
+    private Map<String, Object> delivery_address;
 
     ///*
     public Long getRequest_id() { return request_id; }
@@ -63,6 +67,7 @@ public class Request {
     public String toString(){
         DAORequest rdao = DAOFactory.getInstance().getRDAO();
         DAOGoodBought gbdao = DAOFactory.getInstance().getGBDAO();
+        HashMapConverter hashMapConverter = new HashMapConverter();
         String ans = "Request [ID: " + request_id +
                 ", client login: " + client.getLogin() +
                 ", client name: " + client.getReal_name() +
@@ -71,7 +76,7 @@ public class Request {
                 ", current state: " + cur_state +
                 ", registered: " + registration_time +
                 ", delivered: " + delivery_time +
-                ", delivery address: " + delivery_address + "]";
+                ", delivery address: " + hashMapConverter.convertToDatabaseColumn(delivery_address) + "]";
         return ans;
     }
 }

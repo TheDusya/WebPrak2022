@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@RequiredArgsConstructor
 @ToString
 @Table(name = "good_bought")
 public class GoodBought {

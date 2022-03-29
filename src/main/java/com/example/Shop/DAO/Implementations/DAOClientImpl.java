@@ -15,7 +15,6 @@ public class DAOClientImpl implements DAOClient {
         session.beginTransaction();
         session.save(client);
         session.getTransaction().commit();
-        session.close();
     }
 
     @Override
@@ -37,7 +36,7 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
-    public List<Client> getClientByName(String name) {
+    public List<Client> getClientsByName(String name) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Client> query = session.createQuery("FROM Client WHERE real_name LIKE :thisName", Client.class)
                 .setParameter("thisName", "%" + name + "%");
@@ -67,4 +66,16 @@ public class DAOClientImpl implements DAOClient {
         }
         return query.getResultList();
     }
+
+    @Override
+    public Client getClientByLogin(String login) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<Client> query = session.createQuery("FROM Client WHERE login = :thisLogin", Client.class)
+                .setParameter("thisLogin", login);
+        if (query.getResultList().size() == 0) {
+            return null;
+        }
+        return query.getResultList().get(0);
+    }
+
 }
