@@ -16,6 +16,7 @@ public class ShopApplication {
 		try {
 			Client client = new Client("Human", "123456", false);
 			client.setReal_name("Фыва Олдж");
+			client.setAddress("{дом=25, город=Москва, улица=3-я Строителей, страна=Россия}");
 			DAOClient dao = DAOFactory.getInstance().getCDAO();
 			if (dao.getClientByLogin(client.getLogin())==null) dao.addClient(client);
 			else System.out.println("aaa");

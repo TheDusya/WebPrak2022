@@ -35,8 +35,7 @@ public class Good {
     private tech_type kind;
 
     @Column (name = "chars")
-    @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> chars;
+    private String chars;
 
     @Column (name = "price")
     private Integer price;
@@ -70,4 +69,5 @@ public class Good {
                 ", country=" + country + "]";
 
     }
+
 }

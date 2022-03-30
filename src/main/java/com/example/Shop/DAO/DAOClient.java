@@ -13,5 +13,6 @@ public interface DAOClient {
     Client getClientByLogin (String name);
     List<Client> getClientsByName (String name);
     List<Client> getAllClients ();
-    //List<TableClient> getClientsByCity (String City);
+    List<Client> areAdmins (boolean param);
+    String getCity (Client client);
 }

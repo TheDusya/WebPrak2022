@@ -20,7 +20,7 @@ public class MyTests {
     @Test
     public void testSomeClient() {
         DAOClient dao = DAOFactory.getInstance().getCDAO();
-        Client client = dao.getClientByID(Long.valueOf(3));
+        Client client = dao.getClientByID(Long.valueOf(7));
         System.out.println(client);
     }
     @Test

@@ -41,8 +41,7 @@ public class Client {
     private String mail;
 
     @Column (name = "address")
-    @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> address;
+    private String address;
 
     @Column (length = 16, name = "phone")
     private String phone;
@@ -62,11 +61,7 @@ public class Client {
     public void setPass(String pass) { this.pass = pass; }
     public void setReal_name(String name) { real_name = name; }
     public void setIs_admin(boolean is) { is_admin = is; }
-    public void setAddress(String address)
-    {
-        HashMapConverter hashMapConverter = new HashMapConverter();
-        this.address = hashMapConverter.convertToEntityAttribute(address);
-    }
+    public void setAddress(String address) { this.address = address;}
     public void setMail(String mail) { this.mail = mail; }
     public void setPhone(String phone) { this.phone = phone; }
     //*/

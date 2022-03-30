@@ -5,19 +5,21 @@ import com.example.Shop.DAO.Factory.DAOFactory;
 import com.example.Shop.tables.Client;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ClientTests {
 
     @Test
-    public void testSomeClient() {
+    public void TestGetClientByID() {
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         Client client = dao.getClientByID(Long.valueOf(3));
         assertNotEquals(client, null);
     }
 
     @Test
-    public void DontGetSomeClient() {
+    public void TestDontGetClientByID() {
         boolean alright = true;
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         Client client = dao.getClientByID(Long.valueOf(345));
@@ -25,14 +27,37 @@ public class ClientTests {
     }
 
     @Test
-    public void GetNameByLogin() {
+    public void TestGetNameByLogin() {
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         Client client = dao.getClientByLogin("Pushkin");
         assertEquals(client.getReal_name(), "Пушкин Александр Сергеевич");
     }
 
     @Test
-    public void AddingClient() {
+    public void TestGetClientsByName (){
+        String someName="Иванов Иван";
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        List<Client> list = dao.getClientsByName(someName);
+        assertEquals(list.get(0).getClient_id(), dao.getClientByLogin("Vanya_2002").getClient_id());
+    }
+
+    @Test
+    public void TestGetAdmins (){
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        List<Client> list = dao.areAdmins(true);
+        assertEquals(list.size(), 2);
+    }
+
+    @Test
+    public void TestGetCity () {
+        String somelLogin = "MrCharms";
+        String realCity = "Санкт-Петербург";
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        assertEquals(dao.getCity(dao.getClientByLogin(somelLogin)), realCity);
+    }
+
+    @Test
+    public void TestAddClient() {
         boolean alright = true;
         try {
             Client client = new Client("Human", "123456", false);
@@ -46,4 +71,31 @@ public class ClientTests {
         }
         assertEquals(alright, true);
     }
+
+    @Test
+    public void TestDeleteClient() {
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        Client client = dao.getClientByLogin("Human");
+        boolean alright = true;
+        try{
+            if (client!=null) dao.deleteClient(client);
+            else System.out.println("aaa");
+        }
+            catch (Exception e){
+            alright = false;
+        }
+        assertEquals(alright, true);
+    }
+
+    @Test
+    public void TestUpdateClient() {
+        String someAddress = "страна: Россия, город: Самара, улица: Заречная, дом: 21";
+        String login = "A";
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        Client client = dao.getClientByLogin(login);
+        client.setAddress(someAddress);
+        dao.updateClient(client);
+        assertEquals(client.getAddress(), someAddress);
+    }
+
 }

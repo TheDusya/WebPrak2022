@@ -50,8 +50,7 @@ public class Request {
     private Integer delivery_cost;
 
     @Column (name = "delivery_address")
-    @Convert(converter = HashMapConverter.class)
-    private Map<String, Object> delivery_address;
+    private String delivery_address;
 
     ///*
     public Long getRequest_id() { return request_id; }
@@ -76,7 +75,7 @@ public class Request {
                 ", current state: " + cur_state +
                 ", registered: " + registration_time +
                 ", delivered: " + delivery_time +
-                ", delivery address: " + hashMapConverter.convertToDatabaseColumn(delivery_address) + "]";
+                ", delivery address: " + delivery_address + "]";
         return ans;
     }
 }

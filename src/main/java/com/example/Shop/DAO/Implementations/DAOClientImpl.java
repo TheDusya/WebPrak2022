@@ -7,14 +7,22 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.util.List;
+import java.util.Set;
 
 public class DAOClientImpl implements DAOClient {
     @Override
     public void addClient(Client client) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
+        /*Query<Client> query = session.createQuery("INSERT INTO Client (login, pass, real_name, is_admin, mail, phone) VALUES (:logval, :pasval, :nameval, :adm, :mailval, :phoneval)", Client.class)
+                .setParameter("logval", client.getLogin()).setParameter("pasval", client.getPass())
+                .setParameter("nameval", client.setReal_name()).setParameter("adm", client.getIs_admin())
+                .setParameter("mailval", client.getMail()).setParameter("phoneval", client.getPhone());
+
+        */
         session.save(client);
         session.getTransaction().commit();
+        session.close();
     }
 
     @Override
@@ -76,6 +84,31 @@ public class DAOClientImpl implements DAOClient {
             return null;
         }
         return query.getResultList().get(0);
+    }
+
+    @Override
+    public List<Client> areAdmins(boolean param){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<Client> query = session.createQuery("FROM Client WHERE is_admin = :param", Client.class)
+                .setParameter("param", param);
+        if (query.getResultList().size() == 0) {
+            return null;
+        }
+        return query.getResultList();
+    }
+
+    @Override
+    public String getCity (Client client){
+        if (client.getAddress() == null) return "";
+        String adr = client.getAddress();
+        for (String str : Set.of("город: ", "посёлок: ", "село: ", "деревня: ", "населённый пункт: ")){
+            int k = adr.indexOf(str);
+            if (k>=0){
+                adr = adr.substring(k+str.length());
+                return adr.substring(0, adr.indexOf(","));
+            }
+        }
+        return "";
     }
 
 }
