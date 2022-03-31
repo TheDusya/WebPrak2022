@@ -86,8 +86,9 @@ public class DAORequestImpl implements DAORequest {
             return null;
         }
         List<Request>res = query.getResultList();
+        List<Request> res2 = query.getResultList();
         if (from == null) return null;
-        for (Request request : res) if (!from.contains(request)) res.remove(request);
+        for (Request request : res2) if (!from.contains(request)) res.remove(request);
         return res;
     }
 
@@ -124,8 +125,9 @@ public class DAORequestImpl implements DAORequest {
                 .setParameter("i1", min).setParameter("i2", max);
         if (query.getResultList().size() == 0) return null;
         List<Request>res = query.getResultList();
+        List<Request> res2 = query.getResultList();
         if (from == null) return null;
-        for (Request request : res) if (!from.contains(request)) res.remove(request);
+        for (Request request : res2) if (!from.contains(request)) res.remove(request);
         return res;
     }
 

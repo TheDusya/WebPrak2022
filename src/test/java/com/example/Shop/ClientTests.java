@@ -60,37 +60,25 @@ public class ClientTests {
     @Test
     public void TestAddClient() {
         boolean alright = true;
-        try {
-            Client client = new Client("Human", "123456", false);
-            client.setReal_name("Фыва Олдж");
-            DAOClient dao = DAOFactory.getInstance().getCDAO();
-            if (dao.getClientByLogin(client.getLogin())==null) dao.addClient(client);
-            else System.out.println("aaa");
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        Client client = new Client("Human2", "123456", false);
+        client.setReal_name("Фыва Олдж");
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        if (dao.getClientByLogin(client.getLogin())==null) dao.addClient(client);
+        assertNotEquals(dao.getClientByLogin("Human2"), null);
     }
 
     @Test
     public void TestDeleteClient() {
         DAOClient dao = DAOFactory.getInstance().getCDAO();
-        Client client = dao.getClientByLogin("Human");
+        Client client = dao.getClientByLogin("Human2");
         boolean alright = true;
-        try{
-            if (client!=null) dao.deleteClient(client);
-            else System.out.println("aaa");
-        }
-            catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        if (client!=null) dao.deleteClient(client);
+        assertEquals(dao.getClientByLogin("Human2"), null);
     }
 
     @Test
     public void TestUpdateClient() {
-        String someAddress = "страна: Россия, город: Самара, улица: Заречная, дом: 29";
+        String someAddress = "страна: Россия, город: Самара, улица: Заречная, дом: 28";
         String login = "A";
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         Client client = dao.getClientByLogin(login);

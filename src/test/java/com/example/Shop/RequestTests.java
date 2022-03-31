@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class RequestTests {
 
@@ -43,51 +44,35 @@ public class RequestTests {
     @Test
     public void testAddRequest(){
         boolean alright = true;
-        try {
-            DAOClient dao = DAOFactory.getInstance().getCDAO();
-            Request request = new Request(dao.getClientByID(10), "cancelled");
-            DAORequest dao2 = DAOFactory.getInstance().getRDAO();
-            dao2.addRequest(request);
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        DAOClient dao = DAOFactory.getInstance().getCDAO();
+        Request request = new Request(dao.getClientByID(10), "cancelled");
+        DAORequest dao2 = DAOFactory.getInstance().getRDAO();
+        List<Request> list1 = dao2.getRequestsByClient(dao2.getRequestsInState("cancelled"),
+                (dao.getClientByID(10)));
+        dao2.addRequest(request);
+        List<Request> list2 = dao2.getRequestsByClient(dao2.getRequestsInState("cancelled"),
+                (dao.getClientByID(10)));
+        assertEquals(list1.size()+1, list2.size());
 
     }
 
     @Test
     public void testDeleteRequest(){
-        int someId = 12;
-        boolean alright = false;
-        try {
-            DAORequest dao = DAOFactory.getInstance().getRDAO();
-            Request request = dao.getRequestByID(someId);
-            dao.deleteRequest(request);
-            alright = dao.getRequestByID(someId)==null;
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        int someId = 14;
+        DAORequest dao = DAOFactory.getInstance().getRDAO();
+        Request request = dao.getRequestByID(someId);
+        dao.deleteRequest(request);
+        assertEquals(dao.getRequestByID(someId), null);
     }
 
     @Test
     public void testUpdateRequest(){
         int someId = 7;
-        boolean alright;
-        try {
-            DAORequest dao = DAOFactory.getInstance().getRDAO();
-            Request request = dao.getRequestByID(someId);
-            request.setCur_state("cancelled");
-            dao.updateRequest(request);
-
-            alright = dao.getRequestByID(someId).getCur_state().equals("cancelled");
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        DAORequest dao = DAOFactory.getInstance().getRDAO();
+        Request request = dao.getRequestByID(someId);
+        request.setCur_state("assembled");
+        dao.updateRequest(request);
+        assertEquals(dao.getRequestByID(someId).getCur_state().equals("assembled"), true);
     }
 
 }

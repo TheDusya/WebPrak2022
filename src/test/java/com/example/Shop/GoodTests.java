@@ -62,16 +62,11 @@ public class GoodTests {
 
     @Test
     public void TestAddGood() {
-        boolean alright = true;
-        try {
-            Good good = new Good("Qwerty", "UIOP", "Фен", 2357, 98);
-            DAOGood dao = DAOFactory.getInstance().getGDAO();
-            dao.addGood(good);
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        Good good = new Good("Qwerty", "UIOP", "Фен", 2357, 98);
+        DAOGood dao = DAOFactory.getInstance().getGDAO();
+        int size1 = dao.getAllGoods().size();
+        dao.addGood(good);
+        assertEquals(size1+1, dao.getAllGoods().size());
     }
 
 
@@ -88,19 +83,11 @@ public class GoodTests {
 
     @Test
     public void TestDeleteGood() {
-        Long someID = Long.valueOf(55);
+        Long someID = Long.valueOf(56);
         DAOGood dao = DAOFactory.getInstance().getGDAO();
         Good good = dao.getGoodByID(someID);
-        boolean alright;
-        try{
-            if (good!=null) dao.deleteGood(good);
-            else System.out.println("aaa");
-            alright=dao.getGoodByID(someID)==null;
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        if (good!=null) dao.deleteGood(good);
+        assertEquals(dao.getGoodByID(someID), null);
     }
 
 }

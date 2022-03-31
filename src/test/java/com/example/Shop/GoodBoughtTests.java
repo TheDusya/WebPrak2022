@@ -30,18 +30,14 @@ public class GoodBoughtTests {
 
     @Test
     public void TestAddGoodBought() {
-        boolean alright = true;
-        try {
-            DAOGood dao = DAOFactory.getInstance().getGDAO();
-            DAORequest dao2 = DAOFactory.getInstance().getRDAO();
-            GoodBought goodBought = new GoodBought(dao2.getRequestByID(2), dao.getGoodByID(15), 7);
-            DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
-            dao3.addGoodBought(goodBought);
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        DAOGood dao = DAOFactory.getInstance().getGDAO();
+        DAORequest dao2 = DAOFactory.getInstance().getRDAO();
+        GoodBought goodBought = new GoodBought(dao2.getRequestByID(2), dao.getGoodByID(15), 7);
+        DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
+        List<GoodBought> list1 = dao3.getGoodsBoughtByGood(dao.getGoodByID(15));
+        dao3.addGoodBought(goodBought);
+        List<GoodBought> list2 = dao3.getGoodsBoughtByGood(dao.getGoodByID(15));
+        assertEquals(list1.size()+1, list2.size());
     }
 
     @Test
@@ -65,31 +61,19 @@ public class GoodBoughtTests {
     public void TestUpdateGoodBought() {
         boolean alright = true;
         Long id = Long.valueOf(1);
-        try {
-            DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
-            GoodBought goodBought = dao3.getGoodBoughtByID(id);
-            goodBought.setAmount(5);
-            dao3.updateGoodBought(goodBought);
-            alright = (dao3.getGoodBoughtByID(id).getAmount()==5);
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
+        GoodBought goodBought = dao3.getGoodBoughtByID(id);
+        goodBought.setAmount(5);
+        dao3.updateGoodBought(goodBought);
+        assertEquals(dao3.getGoodBoughtByID(id).getAmount(), 5);
     }
 
     @Test
     public void TestDeleteGoodBought() {
-        boolean alright = true;
-        try {
-            DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
-            GoodBought goodBought = dao3.getGoodBoughtByID(9);
-            dao3.deleteGoodBought(goodBought);
-        }
-        catch (Exception e){
-            alright = false;
-        }
-        assertEquals(alright, true);
+        DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
+        GoodBought goodBought = dao3.getGoodBoughtByID(10);
+        dao3.deleteGoodBought(goodBought);
+        assertEquals(dao3.getGoodBoughtByID(10),null );
     }
 
 }
