@@ -57,6 +57,15 @@ public class DAOGoodImpl implements DAOGood {
     }
 
     @Override
+    public Good getGoodByID(int Id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<Good> query = session.createQuery("FROM Good WHERE good_id = :thisID", Good.class)
+                .setParameter("thisID", Long.valueOf(Id));
+        if (query.getResultList().size() == 0) return null;
+        return query.getResultList().get(0);
+    }
+
+    @Override
     public List<Good> getAllGoods() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Good> query = session.createQuery("FROM Good", Good.class);

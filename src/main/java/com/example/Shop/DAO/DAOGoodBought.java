@@ -12,6 +12,7 @@ public interface DAOGoodBought {
     void deleteGoodBought(GoodBought goodBought);
 
     GoodBought getGoodBoughtByID (Long goodBought_ID);
+    GoodBought getGoodBoughtByID (int goodBought_ID);
     List<GoodBought> getAllGoodsBought ();
     List<GoodBought> getGoodsBoughtByGood (Good good);
     List<GoodBought> getGoodsBoughtByRequest (Request request);

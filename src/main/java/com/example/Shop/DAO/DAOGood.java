@@ -11,6 +11,7 @@ public interface DAOGood {
     void deleteGood(Good good);
 
     Good getGoodByID (Long good_ID);
+    Good getGoodByID (int good_ID);
     List<Good> getAllGoods ();
     List<Good> getGoodsByKind (List<Good> from, tech_type kind);
     List<Good> getGoodsByManufacturer (List<Good> from, String manufacturer);

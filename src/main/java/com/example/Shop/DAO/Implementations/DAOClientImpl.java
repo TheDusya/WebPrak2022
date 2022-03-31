@@ -66,6 +66,17 @@ public class DAOClientImpl implements DAOClient {
     }
 
     @Override
+    public Client getClientByID(int Id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<Client> query = session.createQuery("FROM Client WHERE client_id = :thisID", Client.class)
+                .setParameter("thisID", Long.valueOf(Id));
+        if (query.getResultList().size() == 0) {
+            return null;
+        }
+        return query.getResultList().get(0);
+    }
+
+    @Override
     public List<Client> getAllClients() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Client> query = session.createQuery("FROM Client", Client.class);

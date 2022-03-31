@@ -56,6 +56,18 @@ public class DAORequestImpl implements DAORequest {
     }
 
     @Override
+    public Request getRequestByID(int Id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<Request> query = session.createQuery("FROM Request WHERE request_id = :thisID", Request.class)
+                .setParameter("thisID", Long.valueOf(Id));
+        if (query.getResultList().size() == 0) {
+            return null;
+        }
+        return query.getResultList().get(0);
+    }
+
+
+    @Override
     public List<Request> getAllRequests() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Request> query = session.createQuery("FROM Request", Request.class);

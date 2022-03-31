@@ -14,6 +14,7 @@ public interface DAORequest {
 
 
     Request getRequestByID (Long request_ID);
+    Request getRequestByID (int request_ID);
     List<Request> getAllRequests ();
     List<Request> getRequestsByClient (List<Request> from, Client client);
     List<Request> getRequestsInState (List<Request> from, request_state state);

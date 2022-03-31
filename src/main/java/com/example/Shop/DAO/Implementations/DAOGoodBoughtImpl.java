@@ -55,6 +55,17 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
     }
 
     @Override
+    public GoodBought getGoodBoughtByID(int Id) {
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE good_bought_id = :thisID", GoodBought.class)
+                .setParameter("thisID", Long.valueOf(Id));
+        if (query.getResultList().size() == 0) {
+            return null;
+        }
+        return query.getResultList().get(0);
+    }
+
+    @Override
     public List<GoodBought> getAllGoodsBought() {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<GoodBought> query = session.createQuery("FROM GoodBought", GoodBought.class);

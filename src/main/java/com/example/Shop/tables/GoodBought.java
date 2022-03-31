@@ -8,7 +8,6 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
@@ -20,13 +19,13 @@ public class GoodBought {
     private Long good_bought_id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "request_id")
+    @JoinColumn (nullable = false, name = "request_id")
     @NonNull
     @ToString.Exclude
     private Request request;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn (name = "good_id")
+    @JoinColumn (nullable = false, name = "good_id")
     @NonNull
     @ToString.Exclude
     private Good good;
@@ -39,8 +38,18 @@ public class GoodBought {
     public Request getRequest() { return request; }
     public Good getGood() { return good; }
     public Integer getAmount() { return amount; }
+
+    public void setRequest(Request request) { this.request=request; }
+    public void setGood(Good good) { this.good=good; }
+    public void setAmount(int amount) { this.amount = amount; }
     //*/
 
+    public GoodBought(Request request, Good good, Integer amount){
+        this.request=request;
+        this.good = good;
+        this.amount = amount;
+    }
+    public GoodBought(){}
 
     @Override
     public int hashCode() {
