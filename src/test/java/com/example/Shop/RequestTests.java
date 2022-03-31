@@ -22,7 +22,7 @@ public class RequestTests {
         DAORequest dao = DAOFactory.getInstance().getRDAO();
         DAOClient dao2 = DAOFactory.getInstance().getCDAO();
         Client client = dao2.getClientByID(3);
-        List<Request> list = dao.getRequestsByClient(null, client);
+        List<Request> list = dao.getRequestsByClient(client);
         List<Request> realList = List.of(dao.getRequestByID(Long.valueOf(1)));
         assertEquals(list, realList);
     }
@@ -58,7 +58,7 @@ public class RequestTests {
 
     @Test
     public void testDeleteRequest(){
-        int someId = 10;
+        int someId = 12;
         boolean alright = false;
         try {
             DAORequest dao = DAOFactory.getInstance().getRDAO();

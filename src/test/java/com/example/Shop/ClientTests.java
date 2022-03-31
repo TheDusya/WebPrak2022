@@ -90,7 +90,7 @@ public class ClientTests {
 
     @Test
     public void TestUpdateClient() {
-        String someAddress = "страна: Россия, город: Самара, улица: Заречная, дом: 21";
+        String someAddress = "страна: Россия, город: Самара, улица: Заречная, дом: 29";
         String login = "A";
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         Client client = dao.getClientByLogin(login);

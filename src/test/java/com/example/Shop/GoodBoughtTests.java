@@ -64,7 +64,7 @@ public class GoodBoughtTests {
     @Test
     public void TestUpdateGoodBought() {
         boolean alright = true;
-        Long id = Long.valueOf(7);
+        Long id = Long.valueOf(1);
         try {
             DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
             GoodBought goodBought = dao3.getGoodBoughtByID(id);
@@ -83,7 +83,7 @@ public class GoodBoughtTests {
         boolean alright = true;
         try {
             DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
-            GoodBought goodBought = dao3.getGoodBoughtByID(7);
+            GoodBought goodBought = dao3.getGoodBoughtByID(9);
             dao3.deleteGoodBought(goodBought);
         }
         catch (Exception e){
