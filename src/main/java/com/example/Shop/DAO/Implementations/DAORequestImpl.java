@@ -14,7 +14,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.*;
 
 public class DAORequestImpl implements DAORequest {
     @Override
@@ -86,37 +86,54 @@ public class DAORequestImpl implements DAORequest {
             return null;
         }
         List<Request>res = query.getResultList();
-        if (from == null) return res;
+        if (from == null) return null;
         for (Request request : res) if (!from.contains(request)) res.remove(request);
         return res;
     }
 
+    @Override
+    public List<Request> getRequestsByClient(Client client) {
+        return getRequestsByClient(this.getAllRequests(), client);
+    }
 
     @Override
-    public List<Request> getRequestsInState (List<Request> from, request_state state) {
+    public List<Request> getRequestsInState (List<Request> from, String state) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Request> query = session.createQuery
-                        ("FROM Request WHERE cur_state =: i1", Request.class)
+                        ("FROM Request WHERE cur_state LIKE :i1", Request.class)
                 .setParameter("i1", state);
         if (query.getResultList().size() == 0) return null;
         List<Request>res = query.getResultList();
-        if (from == null) return res;
-        for (Request request : res) if (!from.contains(request)) res.remove(request);
+        List<Request> res2 = query.getResultList();
+        if (from == null) return null;
+        for (Request request : res2)
+            if (!from.contains(request)) res.remove(request);
         return res;
     }
 
     @Override
-    public List<Request> getRequestsInInterval (List<Request> from, Timestamp min, Timestamp max) {
+    public List<Request> getRequestsInState (String state) {
+        return getRequestsInState(this.getAllRequests(), state);
+    }
+
+    @Override
+    public List<Request> getRequestsInInterval (List<Request> from, Date min, Date max) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Request> query = session.createQuery
                         ("FROM Request WHERE registration_time BETWEEN :i1 AND :i2", Request.class)
                 .setParameter("i1", min).setParameter("i2", max);
         if (query.getResultList().size() == 0) return null;
         List<Request>res = query.getResultList();
-        if (from == null) return res;
+        if (from == null) return null;
         for (Request request : res) if (!from.contains(request)) res.remove(request);
         return res;
     }
+
+    @Override
+    public List<Request> getRequestsInInterval (Date min, Date max) {
+        return getRequestsInInterval(this.getAllRequests(), min, max);
+    }
+
 
     @Override
     public Integer getCost(Request request) {

@@ -12,6 +12,7 @@ import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
@@ -19,9 +20,7 @@ import java.util.Map;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 @SuppressWarnings("JpaAttributeTypeInspection")
 @ToString
 @Table(name = "request")
@@ -32,19 +31,18 @@ public class Request {
     private Long request_id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @NonNull
-    @JoinColumn (name = "client_id")
+    @JoinColumn (nullable = false, name = "client_id")
     private Client client;
 
-    @Enumerated(EnumType.STRING)
-    @Column (name = "cur_state")
-    private request_state cur_state;
+
+    @Column (nullable = false, name = "cur_state")
+    private String cur_state;
 
     @Column (name = "registration_time")
-    private Timestamp registration_time;
+    private Date registration_time;
 
     @Column (name = "delivery_time")
-    private Timestamp delivery_time;
+    private Date delivery_time;
 
     @Column (name = "delivery_cost")
     private Integer delivery_cost;
@@ -55,11 +53,11 @@ public class Request {
     ///*
     public Long getRequest_id() { return request_id; }
     public Client getClient() { return client; }
-    public request_state getCur_state() { return cur_state; }
-    public Timestamp getRegistration_time() { return registration_time; }
-    public Timestamp getDelivery_time() { return delivery_time; }
+    public String getCur_state() { return cur_state; }
+    public Date getRegistration_time() { return registration_time; }
+    public Date getDelivery_time() { return delivery_time; }
     public Integer getDelivery_cost() { return delivery_cost; }
-    public String getDelivery_address() { return delivery_address.toString(); }
+    public String getDelivery_address() { return delivery_address; }
     //*/
 
     @Override
@@ -79,6 +77,12 @@ public class Request {
         return ans;
     }
 
+    public Request(Client client, String state){
+        this.client = client;
+        this.cur_state = state;
+    }
+    public Request(){}
+
     @Override
     public int hashCode() {
         return request_id.hashCode();
@@ -90,5 +94,10 @@ public class Request {
             return false;
         }
         else return ((Request) obj).getRequest_id()==this.request_id;
+    }
+
+    public boolean regIsBetween (String dat1, String dat2){
+        return !(registration_time).after(Date.valueOf(dat2)) &&
+                !(registration_time).before(Date.valueOf(dat1));
     }
 }

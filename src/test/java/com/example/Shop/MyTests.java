@@ -18,12 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MyTests {
 
-    @Test
-    public void testSomeGoodBought() {
-        DAOGoodBought dao = DAOFactory.getInstance().getGBDAO();
-        GoodBought goodBought = dao.getGoodBoughtByID(Long.valueOf(3));
-        System.out.println(goodBought);
-    }
 
     @Test
     public void testSomeRequest() {
