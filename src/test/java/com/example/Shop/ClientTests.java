@@ -38,14 +38,15 @@ public class ClientTests {
         String someName="Иванов Иван";
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         List<Client> list = dao.getClientsByName(someName);
-        assertEquals(list.get(0).getClient_id(), dao.getClientByLogin("Vanya_2002").getClient_id());
+        assertEquals(list, List.of(dao.getClientByLogin("Vanya_2002")));
     }
 
     @Test
     public void TestGetAdmins (){
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         List<Client> list = dao.areAdmins(true);
-        assertEquals(list.size(), 2);
+        List realList = List.of(dao.getClientByID(Long.valueOf(1)), dao.getClientByID(Long.valueOf(4)));
+        assertEquals(list, realList);
     }
 
     @Test

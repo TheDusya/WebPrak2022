@@ -71,11 +71,24 @@ public class Request {
                 ", client login: " + client.getLogin() +
                 ", client name: " + client.getReal_name() +
                 ", sum: " + rdao.getCost(this) +
-                ", " + gbdao.getGoodsBoughtByRequestID(request_id) +
+                ", " + gbdao.getGoodsBoughtByRequest(this) +
                 ", current state: " + cur_state +
                 ", registered: " + registration_time +
                 ", delivered: " + delivery_time +
                 ", delivery address: " + delivery_address + "]";
         return ans;
+    }
+
+    @Override
+    public int hashCode() {
+        return request_id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj== null || obj.getClass()!=this.getClass()){
+            return false;
+        }
+        else return ((Request) obj).getRequest_id()==this.request_id;
     }
 }

@@ -82,6 +82,19 @@ public class Client {
                 ", phone=" + phone + "]";
     }
 
+    @Override
+    public int hashCode() {
+        return client_id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj == null || obj.getClass()!=this.getClass()){
+            return false;
+        }
+        else return ((Client) obj).getClient_id()==this.client_id;
+    }
+
     public Client(String l, String p, boolean a){
         login = l;
         pass = p;

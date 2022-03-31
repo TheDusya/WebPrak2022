@@ -70,4 +70,17 @@ public class Good {
 
     }
 
+    @Override
+    public int hashCode() {
+        return good_id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj== null || obj.getClass()!=this.getClass()){
+            return false;
+        }
+        else return ((Good) obj).getGood_id()==this.good_id;
+    }
+
 }

@@ -35,10 +35,25 @@ public class GoodBought {
     private Integer amount;
 
     //*
-    public Long getGoodBought_id() { return good_bought_id; }
+    public Long getGood_bought_id() { return good_bought_id; }
     public Request getRequest() { return request; }
     public Good getGood() { return good; }
     public Integer getAmount() { return amount; }
     //*/
+
+
+    @Override
+    public int hashCode() {
+        return good_bought_id.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj){
+        if (obj== null || obj.getClass()!=this.getClass()){
+            return false;
+        }
+        else return ((GoodBought) obj).getGood_bought_id()==this.good_bought_id;
+
+    }
 }
 
