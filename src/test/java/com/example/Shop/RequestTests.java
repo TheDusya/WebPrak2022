@@ -56,4 +56,38 @@ public class RequestTests {
 
     }
 
+    @Test
+    public void testDeleteRequest(){
+        int someId = 10;
+        boolean alright = false;
+        try {
+            DAORequest dao = DAOFactory.getInstance().getRDAO();
+            Request request = dao.getRequestByID(someId);
+            dao.deleteRequest(request);
+            alright = dao.getRequestByID(someId)==null;
+        }
+        catch (Exception e){
+            alright = false;
+        }
+        assertEquals(alright, true);
+    }
+
+    @Test
+    public void testUpdateRequest(){
+        int someId = 7;
+        boolean alright;
+        try {
+            DAORequest dao = DAOFactory.getInstance().getRDAO();
+            Request request = dao.getRequestByID(someId);
+            request.setCur_state("cancelled");
+            dao.updateRequest(request);
+
+            alright = dao.getRequestByID(someId).getCur_state().equals("cancelled");
+        }
+        catch (Exception e){
+            alright = false;
+        }
+        assertEquals(alright, true);
+    }
+
 }

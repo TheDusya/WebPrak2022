@@ -58,6 +58,14 @@ public class Request {
     public Date getDelivery_time() { return delivery_time; }
     public Integer getDelivery_cost() { return delivery_cost; }
     public String getDelivery_address() { return delivery_address; }
+
+    public void setRequest_id(Long request_id) { this.request_id=request_id; }
+    public void setClient(Client client) { this.client =client; }
+    public void setCur_state(String cur_state) { this.cur_state=cur_state; }
+    public void setRegistration_time(Date registration_time) { this.registration_time = registration_time; }
+    public void setDelivery_time(Date delivery_time) { this.delivery_time = delivery_time; }
+    public void setDelivery_cost(Integer delivery_cost) { this.delivery_cost = delivery_cost; }
+    public void setDelivery_address(String delivery_address) { this.delivery_address = delivery_address; }
     //*/
 
     @Override
