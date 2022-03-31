@@ -5,6 +5,7 @@ import com.example.Shop.DAO.DAOGoodBought;
 import com.example.Shop.DAO.Factory.DAOFactory;
 import com.example.Shop.tables.Good;
 import com.example.Shop.tables.GoodBought;
+import com.example.Shop.tables.Request;
 import com.example.Shop.util.HibernateUtil;
 import lombok.Getter;
 import org.hibernate.Session;
@@ -64,10 +65,10 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
     }
 
     @Override
-    public List<GoodBought> getGoodsBoughtByGoodID(Long Id) {
+    public List<GoodBought> getGoodsBoughtByGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE good.good_id = :thisID", GoodBought.class)
-                .setParameter("thisID", Id);
+                .setParameter("thisID", good.getGood_id());
         if (query.getResultList().size() == 0) {
             return null;
         }
@@ -75,10 +76,10 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
     }
 
     @Override
-    public List<GoodBought> getGoodsBoughtByRequestID(Long Id) {
+    public List<GoodBought> getGoodsBoughtByRequest(Request request) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<GoodBought> query = session.createQuery("FROM GoodBought WHERE request.request_id = :thisID", GoodBought.class)
-                .setParameter("thisID", Id);
+                .setParameter("thisID", request.getRequest_id());
         if (query.getResultList().size() == 0) {
             return null;
         }

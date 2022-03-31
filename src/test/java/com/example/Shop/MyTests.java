@@ -17,18 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MyTests {
-    @Test
-    public void testSomeClient() {
-        DAOClient dao = DAOFactory.getInstance().getCDAO();
-        Client client = dao.getClientByID(Long.valueOf(7));
-        System.out.println(client);
-    }
-    @Test
-    public void testSomeGood() {
-        DAOGood dao = DAOFactory.getInstance().getGDAO();
-        Good good = dao.getGoodByID(Long.valueOf(4));
-        System.out.println(good);
-    }
 
     @Test
     public void testSomeGoodBought() {
