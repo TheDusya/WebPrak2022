@@ -37,7 +37,8 @@ public class GoodBoughtTests {
         List<GoodBought> list1 = dao3.getGoodsBoughtByGood(dao.getGoodByID(15));
         dao3.addGoodBought(goodBought);
         List<GoodBought> list2 = dao3.getGoodsBoughtByGood(dao.getGoodByID(15));
-        assertEquals(list1.size()+1, list2.size());
+        assertEquals(list1, null);
+        assertEquals(list2.size(), 1);
     }
 
     @Test
@@ -71,9 +72,9 @@ public class GoodBoughtTests {
     @Test
     public void TestDeleteGoodBought() {
         DAOGoodBought dao3 = DAOFactory.getInstance().getGBDAO();
-        GoodBought goodBought = dao3.getGoodBoughtByID(10);
+        GoodBought goodBought = dao3.getGoodBoughtByID(13);
         dao3.deleteGoodBought(goodBought);
-        assertEquals(dao3.getGoodBoughtByID(10),null );
+        assertEquals(dao3.getGoodBoughtByID(13),null );
     }
 
 }
