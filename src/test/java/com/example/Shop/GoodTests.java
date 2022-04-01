@@ -46,17 +46,12 @@ public class GoodTests {
     }
 
     @Test
-    public void TestFilter (){
+    public void TestFilter () throws Exception {
         boolean alright = true;
-        try {
-            DAOGood dao = DAOFactory.getInstance().getGDAO();
-            List<Good> list = dao.getByFilter("Количество камер", 3);
-            List<Good>realList = List.of(dao.getGoodByID(12));
-            assertEquals(list, realList);
-        }
-        catch (Exception e){
-            alright = false;
-        }
+        DAOGood dao = DAOFactory.getInstance().getGDAO();
+        List<Good> list = dao.getByFilter("Количество камер", 3);
+        List<Good>realList = List.of(dao.getGoodByID(12));
+        assertEquals(list, realList);
         assertEquals(alright, true);
     }
 
@@ -83,7 +78,7 @@ public class GoodTests {
 
     @Test
     public void TestDeleteGood() {
-        Long someID = Long.valueOf(56);
+        Long someID = Long.valueOf(57);
         DAOGood dao = DAOFactory.getInstance().getGDAO();
         Good good = dao.getGoodByID(someID);
         if (good!=null) dao.deleteGood(good);
