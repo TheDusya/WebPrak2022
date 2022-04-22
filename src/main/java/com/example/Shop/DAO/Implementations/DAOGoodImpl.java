@@ -8,11 +8,23 @@ import com.example.Shop.types.tech_type;
 import com.example.Shop.util.GoodsInfo;
 import com.example.Shop.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class DAOGoodImpl implements DAOGood {
+
+    protected SessionFactory sessionFactory;
+    @Autowired
+    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
+        this.sessionFactory = sessionFactory.getObject();
+    }
+
     @Override
     public void addGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();

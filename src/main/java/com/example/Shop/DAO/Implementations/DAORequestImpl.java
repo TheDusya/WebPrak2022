@@ -11,12 +11,24 @@ import com.example.Shop.tables.Request;
 import com.example.Shop.types.request_state;
 import com.example.Shop.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
 import java.util.*;
 
+@Repository
 public class DAORequestImpl implements DAORequest {
+
+    protected SessionFactory sessionFactory;
+    @Autowired
+    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
+        this.sessionFactory = sessionFactory.getObject();
+    }
+
     @Override
     public void addRequest(Request request) {
         Session session = HibernateUtil.getSessionFactory().openSession();

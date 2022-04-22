@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+    <title></title>
+</head>
+
+<body>
+
+<div th:insert="fragments :: navbar"> </div>
+
+<div class="indent">
+    <div id="clientInfo">
+        <h4 th:text="${client.getReal_name()}"></h4>
+        <h3 th:text="${client.getLogin()}"></h3>
+        <I><h3 th:if="${client.getIs_admin()}" th:text="'Администратор'"></h3></I>
+        <p th:if="${client.getMail() != null}" th:text="'Почта: ' + ${client.getMail()}"></p>
+        <p th:if="${client.getAddress() != null}" th:text="'Адрес: ' + ${client.getAddress()}"></p>
+        <p th:if="${client.getPhone() != null}" th:text="'Моб.телефон: ' + ${client.getPhone()}"></p>
+
+        <p> Заказы: &nbsp <span th:if="${requestDAO.getRequestsByClient(client) == null}">нет</span>
+            <a th:each="request, iter: ${requestDAO.getRequestsByClient(client)}" th:href="'/request?requestId=' + ${request.getRequest_id()}">
+                <span th:text="${request.getRequest_id()} + ${!iter.last ? ',' : ''}"></span>
+            </a>
+        </p>
+    </div>
+
+    <!--edit delete order button group-->
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <form style="margin-right: 30px" method="get" action="/editPerson">
+                <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
+                <button id="editButton" type="submit" class="btn btn-secondary">Редактировать информацию о человеке</button>
+            </form>
+            <form method="post" action="/removePerson">
+                <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
+                <button id="deleteButton" type="submit" class="btn btn-secondary">Удалить человека из базы</button>
+            </form>
+        </div>
+    </div>
+    <!--end of button group-->
+
+</div>
+
+</body>
+</html>

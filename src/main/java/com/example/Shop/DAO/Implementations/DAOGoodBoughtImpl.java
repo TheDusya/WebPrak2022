@@ -9,12 +9,23 @@ import com.example.Shop.tables.Request;
 import com.example.Shop.util.HibernateUtil;
 import lombok.Getter;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 @Getter
 public class DAOGoodBoughtImpl implements DAOGoodBought {
+
+    protected SessionFactory sessionFactory;
+    @Autowired
+    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
+        this.sessionFactory = sessionFactory.getObject();
+    }
 
     @Override
     public void addGoodBought(GoodBought goodBought) {

@@ -4,12 +4,23 @@ import com.example.Shop.DAO.DAOClient;
 import com.example.Shop.tables.Client;
 import com.example.Shop.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Set;
 
+@Repository
 public class DAOClientImpl implements DAOClient {
+    protected SessionFactory sessionFactory;
+    @Autowired
+    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
+        this.sessionFactory = sessionFactory.getObject();
+    }
+
     @Override
     public void addClient(Client client) {
         Session session = HibernateUtil.getSessionFactory().openSession();
