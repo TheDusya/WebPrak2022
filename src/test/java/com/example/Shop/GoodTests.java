@@ -7,6 +7,7 @@ import com.example.Shop.tables.Client;
 import com.example.Shop.tables.Good;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -31,7 +32,7 @@ public class GoodTests {
     public void TestGetAllGoodsOfKind (){
         DAOGood dao = DAOFactory.getInstance().getGDAO();
         List<Good> list = dao.getGoodsByKind("Мультиварка");
-        List<Good> realList = List.of(dao.getGoodByID(5),
+        List<Good> realList = Arrays.asList(dao.getGoodByID(5),
                 dao.getGoodByID(6), dao.getGoodByID(4));
         assertEquals(list, realList);
     }
@@ -41,7 +42,7 @@ public class GoodTests {
         DAOGood dao = DAOFactory.getInstance().getGDAO();
         List<Good> flist = dao.getGoodsByKind("Мультиварка");
         List<Good> slist = dao.getGoodsPriceBetween(flist, 6000, 9000);
-        List<Good> realList = List.of(dao.getGoodByID(4));
+        List<Good> realList = Arrays.asList(dao.getGoodByID(4));
         assertEquals(slist, realList);
     }
 
@@ -50,7 +51,7 @@ public class GoodTests {
         boolean alright = true;
         DAOGood dao = DAOFactory.getInstance().getGDAO();
         List<Good> list = dao.getByFilter("Количество камер", 3);
-        List<Good>realList = List.of(dao.getGoodByID(12));
+        List<Good>realList = Arrays.asList(dao.getGoodByID(12));
         assertEquals(list, realList);
         assertEquals(alright, true);
     }

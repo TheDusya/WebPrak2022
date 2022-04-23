@@ -5,6 +5,7 @@ import com.example.Shop.DAO.Factory.DAOFactory;
 import com.example.Shop.tables.Client;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,14 +39,14 @@ public class ClientTests {
         String someName="Иванов Иван";
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         List<Client> list = dao.getClientsByName(someName);
-        assertEquals(list, List.of(dao.getClientByLogin("Vanya_2002")));
+        assertEquals(list, Arrays.asList(dao.getClientByLogin("Vanya_2002")));
     }
 
     @Test
     public void TestGetAdmins (){
         DAOClient dao = DAOFactory.getInstance().getCDAO();
         List<Client> list = dao.areAdmins(true);
-        List realList = List.of(dao.getClientByID(Long.valueOf(1)), dao.getClientByID(Long.valueOf(4)));
+        List realList = Arrays.asList(dao.getClientByID(Long.valueOf(1)), dao.getClientByID(Long.valueOf(4)));
         assertEquals(list, realList);
     }
 

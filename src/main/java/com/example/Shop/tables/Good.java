@@ -3,7 +3,6 @@ package com.example.Shop.tables;
 import javax.persistence.*;
 import com.example.Shop.types.tech_type;
 import com.example.Shop.util.HashMapConverter;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
 import org.hibernate.annotations.TypeDef;
 
@@ -15,7 +14,6 @@ import java.util.Map;
 @AllArgsConstructor
 @SuppressWarnings("JpaAttributeTypeInspection")
 @Table(name = "good")
-@TypeDef(name = "jsonb", typeClass = JsonBinaryType.class)
 public class Good {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

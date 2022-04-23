@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -24,7 +25,7 @@ public class RequestTests {
         DAOClient dao2 = DAOFactory.getInstance().getCDAO();
         Client client = dao2.getClientByID(3);
         List<Request> list = dao.getRequestsByClient(client);
-        List<Request> realList = List.of(dao.getRequestByID(Long.valueOf(1)));
+        List<Request> realList = Arrays.asList(dao.getRequestByID(Long.valueOf(1)));
         assertEquals(list, realList);
     }
 
@@ -37,7 +38,7 @@ public class RequestTests {
 
         List<Request> intList = dao.getRequestsInInterval(i1, i2);
         List<Request> list = dao.getRequestsInState(intList, "assembled");
-        List<Request> realList = List.of(dao.getRequestByID(Long.valueOf(6)), dao.getRequestByID(Long.valueOf(7)));
+        List<Request> realList = Arrays.asList(dao.getRequestByID(Long.valueOf(6)), dao.getRequestByID(Long.valueOf(7)));
         assertEquals(list, realList);
     }
 

@@ -22,7 +22,6 @@ import java.util.Map;
 @Setter
 @AllArgsConstructor
 @SuppressWarnings("JpaAttributeTypeInspection")
-@ToString
 @Table(name = "request")
 public class Request {
     @Id

@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,7 +25,7 @@ public class GoodBoughtTests {
         Good good = dao.getGoodByID(Long.valueOf(1));
         DAOGoodBought dao2 = DAOFactory.getInstance().getGBDAO();
         List<GoodBought> list = dao2.getGoodsBoughtByGood(good);
-        List<GoodBought> realList = List.of(dao2.getGoodBoughtByID(Long.valueOf(2)));
+        List<GoodBought> realList = Arrays.asList(dao2.getGoodBoughtByID(Long.valueOf(2)));
         assertEquals(list, realList);
     }
 

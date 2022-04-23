@@ -10,6 +10,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -123,7 +124,7 @@ public class DAOClientImpl implements DAOClient {
     public String getCity (Client client){
         if (client.getAddress() == null) return "";
         String adr = client.getAddress();
-        for (String str : Set.of("город: ", "посёлок: ", "село: ", "деревня: ", "населённый пункт: ")){
+        for (String str :  Arrays.asList("город: ", "посёлок: ", "село: ", "деревня: ", "населённый пункт: ")){
             int k = adr.indexOf(str);
             if (k>=0){
                 adr = adr.substring(k+str.length());

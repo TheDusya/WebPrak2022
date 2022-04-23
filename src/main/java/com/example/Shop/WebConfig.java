@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public ClassLoaderTemplateResolver templateResolver() {
 
-        var templateResolver = new ClassLoaderTemplateResolver();
+        ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
 
         templateResolver.setPrefix("templates/");
         templateResolver.setCacheable(true);
@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public SpringTemplateEngine templateEngine() {
 
-        var templateEngine = new SpringTemplateEngine();
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.setTemplateResolver(templateResolver());
 
         return templateEngine;
@@ -38,7 +38,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Bean
     public ViewResolver viewResolver() {
 
-        var viewResolver = new ThymeleafViewResolver();
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
 
         viewResolver.setTemplateEngine(templateEngine());
         viewResolver.setCharacterEncoding("UTF-8");
@@ -51,3 +51,4 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/").setViewName("main");
     }
 }
+
