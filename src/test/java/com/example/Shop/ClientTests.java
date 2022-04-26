@@ -1,7 +1,7 @@
 package com.example.Shop;
 
 import com.example.Shop.DAO.DAOClient;
-import com.example.Shop.DAO.Factory.DAOFactory;
+import com.example.Shop.util.DAOFactory;
 import com.example.Shop.tables.Client;
 import org.junit.jupiter.api.Test;
 

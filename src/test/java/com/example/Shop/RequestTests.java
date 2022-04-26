@@ -2,15 +2,12 @@ package com.example.Shop;
 
 import com.example.Shop.DAO.DAOClient;
 import com.example.Shop.DAO.DAORequest;
-import com.example.Shop.DAO.Factory.DAOFactory;
+import com.example.Shop.util.DAOFactory;
 import com.example.Shop.tables.Client;
 import com.example.Shop.tables.Request;
-import com.example.Shop.types.request_state;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

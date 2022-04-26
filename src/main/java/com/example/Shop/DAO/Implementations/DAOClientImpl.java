@@ -15,11 +15,6 @@ import java.util.Set;
 
 @Repository
 public class DAOClientImpl implements DAOClient {
-    protected SessionFactory sessionFactory;
-    @Autowired
-    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
-        this.sessionFactory = sessionFactory.getObject();
-    }
 
     @Override
     public void addClient(Client client) {

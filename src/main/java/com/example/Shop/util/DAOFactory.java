@@ -1,4 +1,4 @@
-package com.example.Shop.DAO.Factory;
+package com.example.Shop.util;
 
 import com.example.Shop.DAO.Implementations.DAOClientImpl;
 import com.example.Shop.DAO.Implementations.DAOGoodBoughtImpl;

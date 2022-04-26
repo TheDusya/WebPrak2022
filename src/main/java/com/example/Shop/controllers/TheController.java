@@ -1,4 +1,4 @@
-package com.example.Shop;
+package com.example.Shop.controllers;
 
 import com.example.Shop.DAO.DAOClient;
 import com.example.Shop.DAO.DAOGood;

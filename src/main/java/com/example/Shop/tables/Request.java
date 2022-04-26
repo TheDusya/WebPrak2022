@@ -2,27 +2,18 @@ package com.example.Shop.tables;
 
 import com.example.Shop.DAO.DAOGoodBought;
 import com.example.Shop.DAO.DAORequest;
-import com.example.Shop.DAO.Factory.DAOFactory;
-import com.example.Shop.jsons.JsonAddress;
-import com.example.Shop.types.request_state;
-import com.example.Shop.tables.Client;
-import com.example.Shop.types.tech_type;
+import com.example.Shop.util.DAOFactory;
 import com.example.Shop.util.HashMapConverter;
 import lombok.*;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Map;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @SuppressWarnings("JpaAttributeTypeInspection")
-@ToString
 @Table(name = "request")
 public class Request {
     @Id

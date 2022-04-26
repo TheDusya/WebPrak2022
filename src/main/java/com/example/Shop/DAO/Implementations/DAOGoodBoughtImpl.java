@@ -2,17 +2,14 @@ package com.example.Shop.DAO.Implementations;
 
 import com.example.Shop.DAO.DAOGood;
 import com.example.Shop.DAO.DAOGoodBought;
-import com.example.Shop.DAO.Factory.DAOFactory;
+import com.example.Shop.util.DAOFactory;
 import com.example.Shop.tables.Good;
 import com.example.Shop.tables.GoodBought;
 import com.example.Shop.tables.Request;
 import com.example.Shop.util.HibernateUtil;
 import lombok.Getter;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,12 +17,6 @@ import java.util.List;
 @Repository
 @Getter
 public class DAOGoodBoughtImpl implements DAOGoodBought {
-
-    protected SessionFactory sessionFactory;
-    @Autowired
-    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
-        this.sessionFactory = sessionFactory.getObject();
-    }
 
     @Override
     public void addGoodBought(GoodBought goodBought) {

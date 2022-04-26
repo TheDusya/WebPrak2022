@@ -1,16 +1,11 @@
 package com.example.Shop;
 
-import com.example.Shop.DAO.DAOClient;
 import com.example.Shop.DAO.DAOGood;
 import com.example.Shop.DAO.DAOGoodBought;
 import com.example.Shop.DAO.DAORequest;
-import com.example.Shop.DAO.Factory.DAOFactory;
-import com.example.Shop.tables.Client;
+import com.example.Shop.util.DAOFactory;
 import com.example.Shop.tables.Good;
 import com.example.Shop.tables.GoodBought;
-import com.example.Shop.util.HibernateUtil;
-import org.hibernate.Session;
-import org.hibernate.query.Query;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

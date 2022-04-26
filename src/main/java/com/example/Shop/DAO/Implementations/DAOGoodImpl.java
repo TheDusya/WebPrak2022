@@ -19,12 +19,6 @@ import java.util.List;
 @Repository
 public class DAOGoodImpl implements DAOGood {
 
-    protected SessionFactory sessionFactory;
-    @Autowired
-    public void setSessionFactory(LocalSessionFactoryBean sessionFactory) {
-        this.sessionFactory = sessionFactory.getObject();
-    }
-
     @Override
     public void addGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();

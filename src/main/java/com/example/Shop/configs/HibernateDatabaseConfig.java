@@ -1,9 +1,12 @@
-package com.example.Shop;
+package com.example.Shop.configs;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 
@@ -13,12 +16,17 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:application.properties")
 public class HibernateDatabaseConfig {
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer placeholderConfigurer(){
+        return new PropertySourcesPlaceholderConfigurer();
+    }
     @Value("${driver}")
     private String DB_DRIVER;
     @Value("${url}")
     private String DB_URL;
-    @Value("${username}")
-    private String DB_USERNAME;
+    //@Value("${username}")
+    //private String DB_USERNAME;
     @Value("${password}")
     private String DB_PASSWORD;
 
@@ -44,8 +52,8 @@ public class HibernateDatabaseConfig {
 
         dataSource.setDriverClassName(DB_DRIVER);
         dataSource.setUrl(DB_URL);
-        dataSource.setUsername(DB_USERNAME);
-        dataSource.setPassword(DB_PASSWORD);
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("111111");
 
         return dataSource;
     }

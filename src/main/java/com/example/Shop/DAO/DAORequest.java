@@ -2,9 +2,7 @@ package com.example.Shop.DAO;
 
 import com.example.Shop.tables.Client;
 import com.example.Shop.tables.Request;
-import com.example.Shop.types.request_state;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
