@@ -46,7 +46,8 @@ public class Good {
     public String getManufacturer() { return manufacturer; }
     public String getModel() { return model; }
     public String getKind() { return kind; }
-    public String getChars() { return chars.toString(); }
+    public String getChars() { return chars; }
+    public String getFormChars() { return Formatted(chars); }
     public Integer getPrice() { return price; }
     public Integer getIn_stock() { return in_stock; }
     public String getCountry() { return country; }
@@ -73,6 +74,11 @@ public class Good {
                 ", in_stock=" + in_stock +
                 ", country=" + country + "]";
 
+    }
+
+    public String Formatted(String str) {
+        String newStr = str.replace(", ", "\n");
+        return newStr;
     }
 
     public Good(String manufacturer, String model, String kind, Integer price, Integer in_stock){

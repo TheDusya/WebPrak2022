@@ -20,15 +20,15 @@
 
 <div class="indent">
     <div id="clientInfo">
-        <h4 th:text="${client.getReal_name()}"></h4>
         <h3 th:text="${client.getLogin()}"></h3>
+        <h4 th:text="${client.getReal_name()}"></h4>
         <I><h3 th:if="${client.getIs_admin()}" th:text="'Администратор'"></h3></I>
         <p th:if="${client.getMail() != null}" th:text="'Почта: ' + ${client.getMail()}"></p>
         <p th:if="${client.getAddress() != null}" th:text="'Адрес: ' + ${client.getAddress()}"></p>
         <p th:if="${client.getPhone() != null}" th:text="'Моб.телефон: ' + ${client.getPhone()}"></p>
 
-        <p> Заказы: &nbsp <span th:if="${requestDAO.getRequestsByClient(client) == null}">нет</span>
-            <a th:each="request, iter: ${requestDAO.getRequestsByClient(client)}" th:href="'/request?requestId=' + ${request.getRequest_id()}">
+        <p> Заказы: &nbsp <span th:if="${requestService.getRequestsByClient(client) == null}">нет</span>
+            <a th:each="request, iter: ${requestService.getRequestsByClient(client)}" th:href="'/request?requestId=' + ${request.getRequest_id()}">
                 <span th:text="${request.getRequest_id()} + ${!iter.last ? ',' : ''}"></span>
             </a>
         </p>
@@ -37,13 +37,13 @@
     <!--edit delete order button group-->
     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
         <div class="btn-group mr-2" role="group" aria-label="First group">
-            <form style="margin-right: 30px" method="get" action="/editPerson">
+            <form style="margin-right: 30px" method="get" action="/editClient">
                 <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
-                <button id="editButton" type="submit" class="btn btn-secondary">Редактировать информацию о человеке</button>
+                <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Редактировать</b></button>
             </form>
-            <form method="post" action="/removePerson">
+            <form method="post" action="/removeClient">
                 <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
-                <button id="deleteButton" type="submit" class="btn btn-secondary">Удалить человека из базы</button>
+                <button style="color: black" id="deleteButton" type="submit" class="btn btn-secondary bg-warning"><b>Удалить</b></button>
             </form>
         </div>
     </div>

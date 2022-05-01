@@ -35,6 +35,7 @@ dependencies {
 	implementation 'org.hibernate:hibernate-core'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf:thymeleaf'
 	implementation 'org.thymeleaf:thymeleaf-spring5'
 

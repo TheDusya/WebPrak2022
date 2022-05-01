@@ -33,11 +33,14 @@ public class GoodBought {
     @Column(name = "amount")
     private Integer amount;
 
+    private Integer actualPrice;
+
     //*
     public Long getGood_bought_id() { return good_bought_id; }
     public Request getRequest() { return request; }
     public Good getGood() { return good; }
     public Integer getAmount() { return amount; }
+    public Integer getActualPrice() { return actualPrice; }
 
     public void setRequest(Request request) { this.request=request; }
     public void setGood(Good good) { this.good=good; }
@@ -48,6 +51,8 @@ public class GoodBought {
         this.request=request;
         this.good = good;
         this.amount = amount;
+        if (good.getPrice()!=null && amount!=null)this.actualPrice = good.getPrice()*amount;
+        else  this.actualPrice = null;
     }
     public GoodBought(){}
 

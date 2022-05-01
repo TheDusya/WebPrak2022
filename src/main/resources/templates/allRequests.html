@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 20px;
+            margin-top: 20px;
+        }
+    </style>
+    <title></title>
+</head>
+
+<body>
+<div th:insert="fragments :: navbar"> </div>
+<div class="indent">
+    <h3>Заказы:</h3>
+    <p><span th:if="${requests == null}">Пока никого нет:(</span>
+        <div th:each="request, iter: ${requests}">
+            <a th:href="'/request?requestId=' + ${request.getRequest_id()}">
+                <span th:text="${request.getRequest_id()}"></span>
+            </a>
+            <span th:text="Создатель+ ':' + ' '"></span>
+            <a th:href="'/client?clientId=' + ${request.getClient().getClient_id()}">
+                <span th:text="${request.getClient().getLogin()} + ${!iter.last ? ';' : ''}"></span>
+            </a>
+            </br>
+        </div>
+    </p>
+</div>
+
+<div th:insert="fragments :: script"> </div>
+
+</body>
+</html>

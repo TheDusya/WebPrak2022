@@ -14,6 +14,7 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collections;
 import java.util.List;
 
 @Repository
@@ -113,7 +114,9 @@ public class DAOGoodImpl implements DAOGood {
         Session session = HibernateUtil.getSessionFactory().openSession();
         Query<Good> query = session.createQuery("FROM Good WHERE kind = :thiskind", Good.class)
                 .setParameter("thiskind", tech_kind);
-        return FromFunc(query, from);
+        List<Good> res = FromFunc(query, from);
+        res.removeAll(Collections.singleton(null));
+        return res;
     }
 
     @Override

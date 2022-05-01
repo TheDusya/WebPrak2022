@@ -1,10 +1,63 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+    <title></title>
 </head>
+
 <body>
+
+<div th:insert="fragments :: navbar"> </div>
+
+<div class="indent">
+    <div id="requestInfo">
+        <h3 th:text="'Заказ №' + ${request.getRequest_id()}"></h3>
+        <h4 th:text="'Клиент: ' + ${request.getClient().getLogin()} + ' (' + ${request.getClient().getReal_name()}+')'"></h4>
+        <p th:if="${request.getCur_state() != null}" th:text="'Состояние: ' + ${request.getCur_state()}"></p>
+        <p th:if="${request.getDelivery_address() != null}" th:text="'Адрес: ' + ${request.getDelivery_address()}"></p>
+        <p th:if="${request.getDelivery_address() == null}" th:text="'Адрес: ' + ${request.getClient().getAddress()}"></p>
+        <p th:if="${request.getRegistration_time() != null}" th:text="'Время регистрации: ' + ${request.getRegistration_time()}"></p>
+        <p th:if="${request.getDelivery_time() != null}" th:text="'Время доставки: ' + ${request.getDelivery_time()}"></p>
+
+
+        <p> Товары: &nbsp <span th:if="${goodBoughtService.getGoodsBoughtByRequest(request) == null}">нет</span>
+            <a th:each="goodBought, iter: ${goodBoughtService.getGoodsBoughtByRequest(request)}" th:href="'/good?goodId=' + ${goodBought.getGood_bought_id()}">
+                <span th:text="${goodBought.getGood().getKind()} + ' ' +
+                ${goodBought.getGood().getManufacturer()} + ' ' +
+                ${goodBought.getGood().getModel()} + ' - ' + ${goodBought.getAmount()} + 'шт.'"></span>
+                <i><span  th:if="${goodBought.getActualPrice() != null}" th:text="${goodBought.getActualPrice()} + ' рублей.'"></span></i>
+            </a>
+        </p>
+    </div>
+    <p th:if="${request.getDelivery_cost() != null}" th:text="'Цена доставки: ' + ${request.getDelivery_cost()}"></p>
+    <h5 th:text="'Общая стоимость: ' + ${requestService.getCost(request)}"></h5>
+
+    <!--edit delete order button group-->
+
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <form style="margin-right: 30px" method="get" action="/editRequest">
+                <input type="hidden" name="requestId" th:value="${request.getRequest_id()}"/>
+                <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Редактировать</b></button>
+            </form>
+            <form method="post" action="/removeRequest">
+                <input type="hidden" name="requestId" th:value="${request.getRequest_id()}"/>
+                <button style="color: black" id="deleteButton" type="submit" class="btn btn-secondary bg-warning"><b>Удалить</b></button>
+            </form>
+        </div>
+    </div>
+    <!--end of button group-->
+
+</div>
 
 </body>
 </html>

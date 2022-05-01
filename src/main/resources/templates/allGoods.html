@@ -1,10 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 20px;
+            margin-top: 20px;
+        }
+    </style>
+    <title></title>
 </head>
+
 <body>
+<div th:insert="fragments :: navbar"> </div>
+<div class="indent">
+    <h3 th:if="${kind == null}"><span>Наши товары:</span></h3>
+    <h3 th:if="${kind != null}"><span th:text="'Наши товары вида ' + ${kind.replace('_', ' ')}"></span></h3>
+    <p>
+        <h5 th:if="${goods == null}">Пока ничего нет:(</h5>
+    <div th:each="good, iter: ${goods}">
+        <a th:href="'/good?goodId=' + ${good.getGood_id()}">
+            <span th:text="${good.getManufacturer()} + ' ' + ${good.getModel()} + ' (' +
+             ${good.getKind()} + ')' + ${!iter.last ? ';' : ''}"></span>
+        </a>
+        </br>
+    </div>
+    </p>
+</div>
+<div class="btn-group mr-2" role="group" aria-label="First group">
+    <form style="margin-left: 30px" method="get" action="/editGood">
+        <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Добавить</b></button>
+    </form>
+</div>
+<div th:insert="fragments :: script"> </div>
 
 </body>
 </html>

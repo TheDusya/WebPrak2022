@@ -1,10 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+    <title></title>
 </head>
+
 <body>
+
+<div th:insert="fragments :: navbar"> </div>
+
+<div class="indent">
+    <p id="goodInfo">
+        <h3 th:text="${good.getManufacturer()} + ' '+ ${good.getModel()}"></h3>
+        <h4 th:text="${good.getKind()}"></h4>
+        <p th:if="${good.getCountry() != null}" th:text="'Страна производства: ' + ${good.getCountry()}"></p>
+        <p th:if="${good.getIn_stock()!= null}" th:text="'В наличии: ' + ${good.getIn_stock()} + ' шт.'"></p>
+        <p th:if="${good.getChars() != null}" th:text="'Прочие характеристики: '"></p>
+        <i><p style="margin-left: 40px" th:if="${good.getChars() != null}" th:utext=" ${good.getChars()} + '.'"></p></i>
+        <h5 th:if="${good.getPrice() != null}" th:text="'Цена: ' + ${good.getPrice()} + ' рублей.'"></h5>
+    </div>
+
+    <!--edit delete order button group-->
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            <form style="margin-left: 30px" method="get" action="/editGood">
+                <input type="hidden" name="goodId" th:value="${good.getGood_id()}"/>
+                <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Редактировать</b></button>
+            </form>
+            <form style="margin-left: 30px" method="post" action="/removeGood">
+                <input type="hidden" name="goodId" th:value="${good.getGood_id()}"/>
+                <button style="color: black" id="deleteButton" type="submit" class="btn btn-secondary bg-warning"><b>Удалить</b></button>
+            </form>
+        </div>
+    </div>
+    <!--end of button group-->
+
+</div>
 
 </body>
 </html>
