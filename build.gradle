@@ -10,6 +10,7 @@ plugins {
 	id 'org.springframework.boot' version '2.6.4'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id "org.gradle.playframework-javascript" version "0.12"
 }
 
 java {
@@ -35,7 +36,6 @@ dependencies {
 	implementation 'org.hibernate:hibernate-core'
 	implementation 'org.postgresql:postgresql'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	//implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.thymeleaf:thymeleaf'
 	implementation 'org.thymeleaf:thymeleaf-spring5'
 
@@ -48,6 +48,8 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.hibernate:hibernate-core'
 	testImplementation 'org.postgresql:postgresql'
+
+
 }
 
 tasks.named('test') {

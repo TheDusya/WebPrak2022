@@ -180,37 +180,33 @@ public class TheController {
     @GetMapping("/editGood")
     public String editGoodPage(@RequestParam(name = "goodId", required = false) Long goodId, Model model) {
         if (goodId == null) {
-            model.addAttribute("Good", new Good());
-            model.addAttribute("GoodService", GDAO);
+            model.addAttribute("good", new Good());
+            model.addAttribute("goodService", GDAO);
             //model.addAttribute("clientService", CDAO);
             return "editGood";
         }
-
         Good good = GDAO.getGoodByID(goodId);
-
         if (good == null) {
             model.addAttribute("error_msg", "Нет товара с с ID = " + goodId);
             return "error";
         }
-
         model.addAttribute("good", good);
         model.addAttribute("goodService", GDAO);
         //model.addAttribute("clientService", CDAO);
         return "editGood";
     }
 
-    @PostMapping("/saveGood")
-    public String saveGoodPage(@RequestParam(name = "goodId") Long goodId,
+    @GetMapping("/saveGood")
+    public String saveGoodPage(@RequestParam(name = "goodId", required = false) Long goodId,
                                @RequestParam(name = "manufacturer") String manufacturer,
                                @RequestParam(name = "model") String model_name,
                                @RequestParam(name = "kind") String kind,
                                @RequestParam(name = "chars", required = false) String chars,
                                @RequestParam(name = "price") Integer price,
                                @RequestParam(name = "in_stock") Integer in_stock,
-                               @RequestParam(name = "country") String country,
+                               @RequestParam(name = "country", required = false) String country,
                                  Model model) {
         Good good = GDAO.getGoodByID(goodId);
-        boolean changeIsSuccessful = false;
 
         if (good != null) {
             good.setManufacturer(manufacturer);
@@ -220,12 +216,16 @@ public class TheController {
             good.setIn_stock(price);
             good.setIn_stock(in_stock);
             good.setCountry(country);
-        } else {
+            GDAO.updateGood(good);
+        }
+        else {
             good = new Good(goodId, manufacturer, model_name, kind, chars, price, in_stock, country);
+            //good = new Good(goodId, "н", "test", "Фен", "test", 0, 0, "test");
+            GDAO.addGood(good);
         }
 
-        model.addAttribute("error_msg", "Данные не сохранены");
-        return "error";
+        //model.addAttribute("error_msg", "Данные не сохранены");
+        return "saveGood";
     }
 
     @PostMapping("/removeGood")

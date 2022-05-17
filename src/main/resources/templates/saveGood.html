@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <title>Сохранение</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 20px;
+            margin-top: 20px;
+        }
+    </style>
+    <title></title>
+</head>
+<body>
+
+<div th:insert="fragments :: navbar"></div>
+<div>
+    <h1 style="text-align: center">ТОВАР УСПЕШНО СОХРАНЁН!<br>(❁´◡`❁)</h1>
+    <h1 style="text-align: center"></h1>
+</div>
+<!--<div><img src= "pictures/Welcome.jpg" /></div>-->
+<!--<div><img th:src="@{/resources/static/Welcome.jpg}" alt="t"/></div>-->
+<!--<div class="pic"> <img th:src="@{//Welcome.jpg}"/></div>-->
+<!--for bootstrap-->
+<div th:insert="fragments :: script"></div>
+
+<!--end for bootstrap-->
+
+</body>
+</html>
