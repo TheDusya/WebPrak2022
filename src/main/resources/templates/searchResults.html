@@ -17,23 +17,20 @@
 <body>
 <div th:insert="fragments :: navbar"> </div>
 <div class="indent">
-  <!--<h3 th:if="${kind == null}">Введен пустой поисковой запрос!</h3>
-  <h3 th:if="${kind != null}"><span th:text="'Результаты поиска по запросу ' + ${kind} + ':'"></span></h3>
-  <p>
-  <h5 th:if="${goods == null}">Пока ничего нет:(</h5>
-  <div th:each="good, iter: ${goods}">
-    <a th:href="'/good?goodId=' + ${good.getGood_id()}">
-            <span th:text="${good.getManufacturer()} + ' ' + ${good.getModel()} + ' (' +
-             ${good.getKind()} + ')' + ${!iter.last ? ';' : ''}"></span>
-    </a>
-    </br>
+  <h3 th:if="${request == null || request.length()==0}">Введен пустой поисковой запрос!</h3>
+  <div th:if="${request != null && request.length()!=0}">
+    <h3 th:if="${request != null}"><span th:text="'Результаты поиска по запросу «' + ${request} + '»:'"></span></h3>
+    <p>
+    <h5 th:if="${goods == null || goods.size()==0}">Пока ничего нет:(</h5>
+    <div th:each="good, iter: ${goods}">
+      <a th:href="'/good?goodId=' + ${good.getGood_id()}">
+                  <span th:text="${good.getManufacturer()} + ' ' + ${good.getModel()} + ' (' +
+                   ${good.getKind()} + ')' + ${!iter.last ? ';' : ''}"></span>
+      </a>
+      </br>
+    </div>
+    </p>
   </div>
-  </p>-->
-</div>
-<div class="btn-group mr-2" role="group" aria-label="First group">
-  <form style="margin-left: 30px" method="get" action="/editGood">
-    <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Добавить</b></button>
-  </form>
 </div>
 <div th:insert="fragments :: script"> </div>
 

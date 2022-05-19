@@ -23,7 +23,6 @@
                 '&in_stock='+document.getElementById("f_in_stock").value +
                 '&country='+document.getElementById("f_country").value
             window.location.href=encodeURI(adr);
-
             }
     </script>
     <title></title>
@@ -38,7 +37,28 @@
     <p id="goodInfo">
         <p> ID: <input type="text" id="f_goodId" th:value="${good.getGood_id()}" /></p>
         <p> Изготовитель: <input type="text" id="f_manufacturer" th:value="${good.getManufacturer()}" /></p>
-        <p> Тип товара: <input type="text" id="f_kind" th:value="${good.getKind()}" /></p>
+        <p> Тип товара:
+         <select id="f_kind"th:value="${good.getKind()}">
+             <option value="Кофеварка">Кофеварка</option>
+             <option value="Мультиварка">Мультиварка</option>
+             <option value="Посудомоечная машина">Посудомоечная машина</option>
+             <option value="Холодильник">Холодильник</option>
+             <option value="Фен">Фен</option>
+             <option value="Утюг">Утюг</option>
+             <option value="Соковыжималка">Соковыжималка</option>
+             <option value="Электрический чайник">Чайник</option>
+             <option value="Мясорубка">Мясорубка</option>
+             <option value="Микроволновая печь">Микроволновая печь</option>
+             <option value="Миксер">Миксер</option>
+             <option value="Электрическая плита">Электроплита</option>
+             <option value="Телевизор">Телевизор</option>
+             <option value="Пылесос">Пылесос</option>
+             <option value="Вентилятор">Вентилятор</option>
+             <option value="Стиральная машина">Стиральная машина</option>
+             <option value="Видеокарта">Видеокарта</option>
+             <option value="Приставка">Игровая приставка</option>
+         </select></p>
+
         <p> Модель: <input type="text" id="f_model" th:value="${good.getModel()}" /></p>
         <p> Страна: <input type="text" id="f_country" th:value="${good.getCountry()}" /></p>
         <p> Наличие: <input type="text" id="f_in_stock" th:value="${good.getIn_stock()}" /></p>
@@ -51,8 +71,14 @@
         <form style="margin-left: 30px" method="get" >
             <button style="color: black" id="saveButton" onClick="func(); return false;" href="fallback.html" class="btn btn-secondary bg-warning"><b>Сохранить</b></button>
         </form>
+        <form style="margin-left: 30px" method="get" action="/allGoods" >
+            <button style="color: black"  href="/allGoods" class="btn btn-secondary bg-warning"><b>Отмена</b></button>
+        </form>
     </div>
 </div>
+
+
+
 
 </div>
 

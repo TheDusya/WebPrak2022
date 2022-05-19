@@ -29,4 +29,5 @@ public interface DAOGood {
     List<Good> getByFilter (String filter, float dec) throws Exception;
     List<Good> getByFilter (List<Good> from, String filter, boolean b) throws Exception;
     List<Good> getByFilter (String filter, boolean b) throws Exception;
+    List<Good> searchGoods (String filter);
 }

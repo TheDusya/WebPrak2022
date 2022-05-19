@@ -15,7 +15,8 @@
 </head>
 
     <div th:insert="fragments :: navbar"></div>
-    <h1 style="text-align: center">О НЕТ!!!<br>ЧТО-ТО ПОШЛО НЕ ТАК<br>⊙﹏⊙</h1>
+    <h1 style="text-align: center"><br>О НЕТ!!!<br>ЧТО-ТО ПОШЛО НЕ ТАК<br>⊙﹏⊙</h1>
+    <h4 style="text-align: center"><span th:text="'Error: ' + ${error_msg}"> </span></h4>
     <div th:insert="fragments :: script"> </div>
 </body>
 

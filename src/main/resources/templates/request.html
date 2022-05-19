@@ -11,6 +11,13 @@
             margin-top: 20px;
         }
     </style>
+
+    <script>
+        function func() {
+            var adr= '/editRequest?requestId='+request.getRequest_id();
+            window.location.href=encodeURI(adr);
+        }
+    </script>
     <title></title>
 </head>
 
@@ -47,7 +54,7 @@
         <div class="btn-group mr-2" role="group" aria-label="First group">
             <form style="margin-right: 30px" method="get" action="/editRequest">
                 <input type="hidden" name="requestId" th:value="${request.getRequest_id()}"/>
-                <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Редактировать</b></button>
+                <button style="color: black" id="editButton"  class="btn btn-secondary bg-warning"><b>Редактировать</b></button>
             </form>
             <form method="post" action="/removeRequest">
                 <input type="hidden" name="requestId" th:value="${request.getRequest_id()}"/>

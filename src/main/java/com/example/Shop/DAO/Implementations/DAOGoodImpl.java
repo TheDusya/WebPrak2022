@@ -14,12 +14,21 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Repository
 public class DAOGoodImpl implements DAOGood {
 
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
+    }
     @Override
     public void addGood(Good good) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -214,4 +223,34 @@ public class DAOGoodImpl implements DAOGood {
         return getByFilter(this.getAllGoods(), filter, b);
     }
 
+    @Override
+    public  List<Good> searchGoods (String request) {
+        List<Good> all = getAllGoods();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        String requestL = request.toLowerCase(Locale.ROOT);
+        List<Good> byModel = FromFunc(session.createQuery ("FROM Good WHERE LOWER(model) =: expr", Good.class)
+                .setParameter("expr",requestL), all);
+        List<Good> byManufacturer = FromFunc(session.createQuery ("FROM Good WHERE LOWER(manufacturer)=: expr", Good.class)
+                .setParameter("expr",requestL), all);
+        List<Good> byKind = FromFunc(session.createQuery ("FROM Good WHERE LOWER(kind) LIKE: expr", Good.class)
+                .setParameter("expr",requestL), all);
+        List<Good> byCountry = FromFunc(session.createQuery ("FROM Good WHERE LOWER(country) LIKE: expr", Good.class)
+                .setParameter("expr",requestL), all);
+        List<Good> byChars = FromFunc(session.createQuery ("FROM Good WHERE LOWER(chars) LIKE : expr", Good.class)
+                .setParameter("expr", "%"+requestL+"%"), all);
+        List<Good> res = new ArrayList<>();
+        if (byModel != null)res.addAll(byModel);
+        if (byManufacturer != null)res.addAll(byManufacturer);
+        if (byKind != null)res.addAll(byKind);
+        if (byCountry != null)res.addAll(byCountry);
+        if (byChars!=null)res.addAll(byChars);
+        if (isNumeric(request)){
+            int i=Integer.parseInt(request);
+            List<Good> byGoodId = FromFunc(session.createQuery ("FROM Good WHERE good_id =: expr", Good.class)
+                    .setParameter("expr", i), all);
+            if (byGoodId!=null) res.addAll(byGoodId);
+        }
+        return res;
+
+    }
 }

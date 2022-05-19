@@ -10,6 +10,12 @@
             margin-top: 0;
         }
     </style>
+    <script>
+    function func() {
+        var adr= '/searchResults?request='+document.getElementById("search-panel").value
+        window.location.href=encodeURI(adr);
+    }
+    </script>
     <title></title>
 </head>
 <body>
@@ -57,10 +63,10 @@
                     </ul>
                 </li>
             </ul>
-            <!--<form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Поиск по сайту" aria-label="Найти">
-                <button class="btn btn-outline-success btn-dark btn-outline-warning" type="submit">Search</button>
-            </form>-->
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" id="search-panel" placeholder="Поиск по сайту" aria-label="Найти">
+                <button class="btn btn-outline-success btn-dark btn-outline-warning"  onClick="func(); return false;" href="fallback.html"  type="submit">Search</button>
+            </form>
         </div>
     </div>
 </nav>

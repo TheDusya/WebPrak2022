@@ -19,7 +19,7 @@
 <div th:insert="fragments :: navbar"> </div>
 <div class="indent">
     <h3 th:if="${kind == null}"><span>Наши товары:</span></h3>
-    <h3 th:if="${kind != null}"><span th:text="'Наши товары вида ' + ${kind}"></span></h3>
+    <h3 th:if="${kind != null}"><span th:text="'Наши товары вида «' + ${kind} + '»: '"></span></h3>
     <p>
         <h5 th:if="${goods == null}">Пока ничего нет:(</h5>
     <div th:each="good, iter: ${goods}">

@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -63,28 +65,6 @@ public class TheController {
         return "allClients";
     }
 
-    @GetMapping("/allGoods")
-    public String AllGoodsPage(@RequestParam(name = "kind", required = false)String kind, Model model) {
-        List<Good> goods;
-        if (kind==null) goods = GDAO.getAllGoods();
-        else goods = GDAO.getGoodsByKind(kind);
-        model.addAttribute("kind", kind);
-        model.addAttribute("goods", goods);
-        model.addAttribute("clientService", CDAO);
-        model.addAttribute("requestService", RDAO);
-        return "allGoods";
-    }
-
-    @GetMapping("/allRequests")
-    public String AllRequestsPage(Model model) {
-        List<Request> requests = RDAO.getAllRequests();
-        model.addAttribute("requests", requests);
-        model.addAttribute("clientService", CDAO);
-        model.addAttribute("requestService", RDAO);
-        model.addAttribute("goodService", GDAO);
-        return "allRequests";
-    }
-
     @GetMapping("/client")
     public String clientPage(@RequestParam(name = "clientId") Long clientId, Model model) {
         Client client = CDAO.getClientByID(clientId);
@@ -117,12 +97,12 @@ public class TheController {
         return "editClient";
     }
 
-    @PostMapping("/saveClient")
+    @GetMapping("/saveClient")
     public String saveClientPage(@RequestParam(name = "clientId") Long clientId,
                                  @RequestParam(name = "login") String login,
                                  @RequestParam(name = "password") String password,
                                  @RequestParam(name = "real_name") String real_name,
-                                 @RequestParam(name = "is_admin") boolean is_admin,
+                                 @RequestParam(name = "is_admin") String is_admin,
                                  @RequestParam(name = "mail") String mail,
                                  @RequestParam(name = "address") String address,
                                  @RequestParam(name = "phone") String phone,
@@ -130,33 +110,43 @@ public class TheController {
 
 
         Client client = CDAO.getClientByID(clientId);
-        boolean changeIsSuccessful = false;
-
+        boolean adm;
+        if (is_admin=="true")adm=true;
+        else adm=false;
         if (client != null) {
             client.setLogin(login);
             client.setPass(password);
             client.setReal_name(real_name);
-            client.setIs_admin(is_admin);
+            client.setIs_admin(adm);
             client.setMail(mail);
             client.setAddress(address);
             client.setPhone(phone);
+            CDAO.updateClient(client);
         } else {
-            client = new Client(clientId, login, password, real_name, is_admin, mail, address, phone);
+            client = new Client(clientId, login, password, real_name, adm, mail, address, phone);
+            CDAO.addClient(client);
         }
 
-        model.addAttribute("error_msg", "Данные не сохранены");
-        return "error";
+        return "redirect:/allClients";
 
-        //return String.format("redirect:/client?clientId=%d", client.getId());
-
-       /* model.addAttribute("error_msg", "Данные о месте не сохранены");
-        return "errorPage";*/
     }
 
     @PostMapping("/removeClient")
     public String removeClientPage(@RequestParam(name = "clientId") Long clientId) {
         CDAO.deleteClient(CDAO.getClientByID(clientId));
         return "redirect:/clients";
+    }
+
+    @GetMapping("/allGoods")
+    public String AllGoodsPage(@RequestParam(name = "kind", required = false)String kind, Model model) {
+        List<Good> goods;
+        if (kind==null) goods = GDAO.getAllGoods();
+        else goods = GDAO.getGoodsByKind(kind);
+        model.addAttribute("kind", kind);
+        model.addAttribute("goods", goods);
+        model.addAttribute("clientService", CDAO);
+        model.addAttribute("requestService", RDAO);
+        return "allGoods";
     }
 
     @GetMapping("/good")
@@ -196,6 +186,32 @@ public class TheController {
         return "editGood";
     }
 
+
+    @GetMapping("/editRequest")
+    public String editRequestPage(@RequestParam(name = "requestId", required = false) Long requestId,
+                                  Model model) {
+        //return "allGoods";
+        if (requestId == null) {
+            model.addAttribute("request", new Request());
+            model.addAttribute("requestService", RDAO);
+            model.addAttribute("goodService", GDAO);
+            model.addAttribute("goodBoughtService", GBDAO);
+            //model.addAttribute("clientService", CDAO);
+            return "editRequest";
+        }
+        Request request = RDAO.getRequestByID(requestId);
+        if (request == null) {
+            model.addAttribute("error_msg", "Нет товара с с ID = " + requestId);
+            return "error";
+        }
+        model.addAttribute("request", request);
+        model.addAttribute("goods", GBDAO.getGoodsBoughtByRequest(request));
+        model.addAttribute("requestService", RDAO);
+        model.addAttribute("goodService", GDAO);
+        model.addAttribute("goodBoughtService", GBDAO);
+        return "editRequest";
+    }
+
     @GetMapping("/saveGood")
     public String saveGoodPage(@RequestParam(name = "goodId", required = false) Long goodId,
                                @RequestParam(name = "manufacturer") String manufacturer,
@@ -205,7 +221,7 @@ public class TheController {
                                @RequestParam(name = "price") Integer price,
                                @RequestParam(name = "in_stock") Integer in_stock,
                                @RequestParam(name = "country", required = false) String country,
-                                 Model model) {
+                               Model model) {
         Good good = GDAO.getGoodByID(goodId);
 
         if (good != null) {
@@ -220,12 +236,10 @@ public class TheController {
         }
         else {
             good = new Good(goodId, manufacturer, model_name, kind, chars, price, in_stock, country);
-            //good = new Good(goodId, "н", "test", "Фен", "test", 0, 0, "test");
             GDAO.addGood(good);
         }
 
-        //model.addAttribute("error_msg", "Данные не сохранены");
-        return "saveGood";
+        return "redirect:/allGoods";
     }
 
     @PostMapping("/removeGood")
@@ -234,21 +248,14 @@ public class TheController {
         return "redirect:/allGoods";
     }
 
-
-    @PostMapping("/fragments")
-    public String forFragments(Model model) {
-        List<String> kinds = List.of("Кофеварка", "Мультиварка", "Посудомоечная машина",
-                "Холодильник", "Фен", "Утюг", "Соковыжималка", "Электрический чайник", "Мясорубка",
-                "Микроволновая печь", "Миксер", "Электрическая плита", "Телевизор", "Пылесос",
-                "Вентилятор", "Стиральная машина", "Видеокарта", "Приставка");
-        model.addAttribute("kinds", kinds);
-        return "fragments";
-    }
-
-    @PostMapping("/catalogue")
-    public String cataloguePage(@RequestParam(name = "goodId") Long goodId) {
-        GDAO.deleteGood(GDAO.getGoodByID(goodId));
-        return "redirect:/allGoods";
+    @GetMapping("/allRequests")
+    public String AllRequestsPage(Model model) {
+        List<Request> requests = RDAO.getAllRequests();
+        model.addAttribute("requests", requests);
+        model.addAttribute("clientService", CDAO);
+        model.addAttribute("requestService", RDAO);
+        model.addAttribute("goodService", GDAO);
+        return "allRequests";
     }
 
     @GetMapping("/request")
@@ -266,5 +273,78 @@ public class TheController {
         model.addAttribute("goodBoughtService", GBDAO);
         return "request";
     }
+
+    @GetMapping("/saveRequest")
+    public String saveRequestPage(@RequestParam(name = "requestId", required = false) Long requestId,
+                                  @RequestParam(name = "creator") String creator,
+                                  @RequestParam(name = "state") String state,
+                                  @RequestParam(name = "reg_time", required = false) String reg_time,
+                                  @RequestParam(name = "del_time", required = false) String del_time,
+                                  @RequestParam(name = "cost", required = false) Integer cost,
+                                  @RequestParam(name = "address", required = false) String adr,
+                               Model model) {
+        Request request = RDAO.getRequestByID(requestId);
+        Client client = CDAO.getClientByLogin(creator);
+        if (client == null) {
+            model.addAttribute("error_msg", "В базе нет клиента с логином " + creator);
+            return "error";
+        }
+        Date reg, del;
+        try {
+            reg = Date.valueOf(reg_time);
+            del =Date.valueOf(del_time);
+        }
+        catch (Exception e){
+            model.addAttribute("error_msg", "Некорректно задана дата.");
+            return "error";
+        }
+
+        if (request != null) {
+            request.setClient(client);
+            request.setCur_state(state);
+            request.setRegistration_time(reg);
+            request.setDelivery_time(del);
+            request.setDelivery_cost(cost);
+            request.setDelivery_address(adr);
+            RDAO.updateRequest(request);
+        }
+        else {
+            request = new Request(requestId, client, state, reg, del, cost, adr);
+            RDAO.addRequest(request);
+        }
+
+        return "redirect:/allRequests";
+    }
+
+    @PostMapping("/removeRequest")
+    public String removeRequestPage(@RequestParam(name = "requestId") Long requestId) {
+        RDAO.deleteRequest(RDAO.getRequestByID(requestId));
+        return "redirect:/allRequest";
+    }
+
+    @GetMapping("/searchResults")
+    public String ResultsPage(@RequestParam(name = "request", required = true)String request, Model model) {
+        List<Good> goods =GDAO.searchGoods(request);
+        model.addAttribute("request", request);
+        model.addAttribute("goods", goods);
+        return "searchResults";
+    }
+
+    @PostMapping("/fragments")
+    public String forFragments(Model model) {
+        List<String> kinds = List.of("Кофеварка", "Мультиварка", "Посудомоечная машина",
+                "Холодильник", "Фен", "Утюг", "Соковыжималка", "Электрический чайник", "Мясорубка",
+                "Микроволновая печь", "Миксер", "Электрическая плита", "Телевизор", "Пылесос",
+                "Вентилятор", "Стиральная машина", "Видеокарта", "Приставка");
+        model.addAttribute("kinds", kinds);
+        return "fragments";
+    }
+
+    @PostMapping("/catalogue")
+    public String cataloguePage(@RequestParam(name = "goodId") Long goodId) {
+        GDAO.deleteGood(GDAO.getGoodByID(goodId));
+        return "redirect:/allGoods";
+    }
+
 }
 

@@ -1,10 +1,70 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <style>
+        .indent {
+            margin-left: 30px;
+            margin-right: 30px;
+            margin-top: 20px;
+        }
+    </style>
+
+    <script>
+        function func() {
+            var adr= '/saveRequest?requestId='+document.getElementById("f_requestId").value +
+                '&creator='+document.getElementById("f_creator").value +
+                '&state='+document.getElementById("f_state").value +
+                '&req_time='+document.getElementById("f_req").value +
+                '&del_time='+document.getElementById("f_del").value +
+                '&cost='+document.getElementById("f_cost").value +
+                '&address='+document.getElementById("f_adr").value;
+            window.location.href=encodeURI(adr);
+        }
+    </script>
+    <title></title>
 </head>
+
 <body>
+
+<div th:insert="fragments :: navbar"> </div>
+
+<div class="indent">
+
+    <p id="requestInfo">
+    <p> ID: <input type="text" id="f_requestId" th:value="${request.getRequest_id()}" /></p>
+    <p> Оформил: <input type="text" id="f_сreator" th:value="${request.getClient().getLogin()}" /></p>
+    <p> Состояние:
+        <select id="f_state"th:value="${request.getCur_state()}">
+            <option value="received">Получен</option>
+            <option value="assembled">В сборке</option>
+            <option value="on_the_way">В пути</option>
+            <option value="cancelled">Отменён</option>
+        </select></p>
+
+    <p> Время составления заказа: <input type="text" id="f_req" th:value="${String.valueOf(request.getRegistration_time())}" /></p>
+    <p> Время доставки заказа: <input type="text" id="f_del" th:value="${String.valueOf(request.getDelivery_time())}" /></p>
+    <p> Адрес: <input type="text" id="f_adr" th:value="${request.getDelivery_address()}" /></p>
+    <p> Cтоимость доставки: <input type="text" id="f_cost" th:value="${request.getDelivery_cost()}" /></p>
+</div>
+
+<div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+    <div class="btn-group mr-2" role="group" aria-label="First group">
+        <form style="margin-left: 30px" method="get" >
+            <button style="color: black" id="saveButton" onClick="func(); return false;" href="fallback.html" class="btn btn-secondary bg-warning"><b>Сохранить</b></button>
+        </form>
+        <form style="margin-left: 30px" method="get" action="/allRequests" >
+            <button style="color: black"  href="/allRequests" class="btn btn-secondary bg-warning"><b>Отмена</b></button>
+        </form>
+    </div>
+</div>
+
+
+
+
+</div>
 
 </body>
 </html>

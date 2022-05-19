@@ -83,4 +83,11 @@ public class GoodTests {
         assertEquals(dao.getGoodByID(someID), null);
     }
 
+    @Test
+    public void TestSearchGood() {
+        DAOGood dao = DAOFactory.getInstance().getGDAO();
+        List<Good> goods = dao.searchGoods("Tefal");
+        assertEquals(dao.getGoodsByManufacturer("Tefal"), goods);
+    }
+
 }
