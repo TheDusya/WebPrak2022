@@ -16,11 +16,11 @@
         function func() {
             var adr= '/saveRequest?requestId='+document.getElementById("f_requestId").value +
                 '&creator='+document.getElementById("f_creator").value +
-                '&state='+document.getElementById("f_state").value +
-                '&req_time='+document.getElementById("f_req").value +
-                '&del_time='+document.getElementById("f_del").value +
-                '&cost='+document.getElementById("f_cost").value +
-                '&address='+document.getElementById("f_adr").value;
+                '&state='+document.getElementById("f_state").value;
+                if (document.getElementById("f_req").value!="") adr +='&req_time='+document.getElementById("f_req").value.toString();
+                if (document.getElementById("f_del").value!="") adr +='&del_time='+document.getElementById("f_del").value.toString();
+                if (document.getElementById("f_cost").value!="") adr+= '&cost='+document.getElementById("f_cost").value;
+                if (document.getElementById("f_adr").value!="") adr+= '&address='+document.getElementById("f_adr").value;
             window.location.href=encodeURI(adr);
         }
     </script>
@@ -32,10 +32,9 @@
 <div th:insert="fragments :: navbar"> </div>
 
 <div class="indent">
-
     <p id="requestInfo">
     <p> ID: <input type="text" id="f_requestId" th:value="${request.getRequest_id()}" /></p>
-    <p> Оформил: <input type="text" id="f_сreator" th:value="${request.getClient().getLogin()}" /></p>
+    <p> Оформил: <input type="text" id="f_creator" th:value="${request.getClient().getLogin()}" /></p>
     <p> Состояние:
         <select id="f_state"th:value="${request.getCur_state()}">
             <option value="received">Получен</option>
@@ -44,10 +43,12 @@
             <option value="cancelled">Отменён</option>
         </select></p>
 
-    <p> Время составления заказа: <input type="text" id="f_req" th:value="${String.valueOf(request.getRegistration_time())}" /></p>
-    <p> Время доставки заказа: <input type="text" id="f_del" th:value="${String.valueOf(request.getDelivery_time())}" /></p>
+
+    <p> Время составления заказа: <input type="date" id="f_req" th:value="${request.getRegistration_time()}" /></p>
+    <p> Время доставки заказа: <input type="date" id="f_del" th:value="${request.getDelivery_time()}" /></p>
     <p> Адрес: <input type="text" id="f_adr" th:value="${request.getDelivery_address()}" /></p>
     <p> Cтоимость доставки: <input type="text" id="f_cost" th:value="${request.getDelivery_cost()}" /></p>
+
 </div>
 
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

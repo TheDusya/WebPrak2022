@@ -37,16 +37,17 @@
 
 
         <p> Товары: &nbsp <span th:if="${goodBoughtService.getGoodsBoughtByRequest(request) == null}">нет</span>
-            <a th:each="goodBought, iter: ${goodBoughtService.getGoodsBoughtByRequest(request)}" th:href="'/good?goodId=' + ${goodBought.getGood_bought_id()}">
-                <span th:text="${goodBought.getGood().getKind()} + ' ' +
+            <a th:if="${goodBoughtService.getGoodsBoughtByRequest(request) != null}"
+               th:each="goodBought, iter: ${goodBoughtService.getGoodsBoughtByRequest(request)}" th:href="'/good?goodId=' + ${goodBought.getGood_bought_id()}">
+                <span th:if="${goodBought != null}" th:text="${goodBought.getGood().getKind()} + ' ' +
                 ${goodBought.getGood().getManufacturer()} + ' ' +
                 ${goodBought.getGood().getModel()} + ' - ' + ${goodBought.getAmount()} + 'шт.'"></span>
                 <i><span  th:if="${goodBought.getActualPrice() != null}" th:text="${goodBought.getActualPrice()} + ' рублей.'"></span></i>
             </a>
         </p>
     </div>
-    <p th:if="${request.getDelivery_cost() != null}" th:text="'Цена доставки: ' + ${request.getDelivery_cost()}"></p>
-    <h5 th:text="'Общая стоимость: ' + ${requestService.getCost(request)}"></h5>
+    <p th:if="${request.getDelivery_cost() != null}" th:text="'Цена доставки: ' + ${request.getDelivery_cost()} + ' рублей.'"></p>
+    <h5 th:text="'Общая стоимость: ' + ${requestService.getCost(request)} + ' рублей.'"></h5>
 
     <!--edit delete order button group-->
 

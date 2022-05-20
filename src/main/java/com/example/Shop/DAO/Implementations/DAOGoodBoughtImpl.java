@@ -96,7 +96,8 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
         if (query.getResultList().size() == 0) {
             return null;
         }
-        return query.getResultList();
+        var e = query.getResultList();
+        return e;
     }
     
     @Override

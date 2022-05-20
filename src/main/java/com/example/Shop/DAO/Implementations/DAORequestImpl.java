@@ -140,6 +140,7 @@ public class DAORequestImpl implements DAORequest {
     public Integer getCost(Request request) {
         DAOGoodBought dao = DAOFactory.getInstance().getGBDAO();
         List <GoodBought> goodsBought = dao.getGoodsBoughtByRequest(request);
-        return dao.sumCosts(goodsBought)+request.getDelivery_cost();
+        if (goodsBought==null) return 0;
+        else return dao.sumCosts(goodsBought)+request.getDelivery_cost();
     }
 }

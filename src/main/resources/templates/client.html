@@ -41,7 +41,7 @@
                 <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
                 <button style="color: black" id="editButton" type="submit" class="btn btn-secondary bg-warning"><b>Редактировать</b></button>
             </form>
-            <form method="post" action="/removeClient">
+            <form style="margin-right: 30px" method="post" action="/removeClient">
                 <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
                 <button style="color: black" id="deleteButton" type="submit" class="btn btn-secondary bg-warning"><b>Удалить</b></button>
             </form>

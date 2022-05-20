@@ -187,31 +187,6 @@ public class TheController {
     }
 
 
-    @GetMapping("/editRequest")
-    public String editRequestPage(@RequestParam(name = "requestId", required = false) Long requestId,
-                                  Model model) {
-        //return "allGoods";
-        if (requestId == null) {
-            model.addAttribute("request", new Request());
-            model.addAttribute("requestService", RDAO);
-            model.addAttribute("goodService", GDAO);
-            model.addAttribute("goodBoughtService", GBDAO);
-            //model.addAttribute("clientService", CDAO);
-            return "editRequest";
-        }
-        Request request = RDAO.getRequestByID(requestId);
-        if (request == null) {
-            model.addAttribute("error_msg", "Нет товара с с ID = " + requestId);
-            return "error";
-        }
-        model.addAttribute("request", request);
-        model.addAttribute("goods", GBDAO.getGoodsBoughtByRequest(request));
-        model.addAttribute("requestService", RDAO);
-        model.addAttribute("goodService", GDAO);
-        model.addAttribute("goodBoughtService", GBDAO);
-        return "editRequest";
-    }
-
     @GetMapping("/saveGood")
     public String saveGoodPage(@RequestParam(name = "goodId", required = false) Long goodId,
                                @RequestParam(name = "manufacturer") String manufacturer,
@@ -274,6 +249,23 @@ public class TheController {
         return "request";
     }
 
+    @GetMapping("/editRequest")
+    public String editRequestPage(@RequestParam(name = "requestId", required = false) Long requestId, Model model) {
+        //return "allGoods";
+        Request request = new Request();
+        if (requestId != null) request = RDAO.getRequestByID(requestId);
+        if (request == null) {
+            model.addAttribute("error_msg", "Нет товара с с ID = " + requestId);
+            return "error";
+        }
+        model.addAttribute("request", request);
+        model.addAttribute("goods", GBDAO.getGoodsBoughtByRequest(request));
+        model.addAttribute("requestService", RDAO);
+        model.addAttribute("goodService", GDAO);
+        model.addAttribute("goodBoughtService", GBDAO);
+        return "editRequest";
+    }
+
     @GetMapping("/saveRequest")
     public String saveRequestPage(@RequestParam(name = "requestId", required = false) Long requestId,
                                   @RequestParam(name = "creator") String creator,
@@ -289,14 +281,14 @@ public class TheController {
             model.addAttribute("error_msg", "В базе нет клиента с логином " + creator);
             return "error";
         }
-        Date reg, del;
+        Date reg=null, del=null;
         try {
-            reg = Date.valueOf(reg_time);
-            del =Date.valueOf(del_time);
+            if (reg_time!=null) reg = Date.valueOf(reg_time);
+            if (del_time!=null) del =Date.valueOf(del_time);
         }
         catch (Exception e){
             model.addAttribute("error_msg", "Некорректно задана дата.");
-            return "error";
+            return "allGoods";
         }
 
         if (request != null) {
@@ -319,7 +311,7 @@ public class TheController {
     @PostMapping("/removeRequest")
     public String removeRequestPage(@RequestParam(name = "requestId") Long requestId) {
         RDAO.deleteRequest(RDAO.getRequestByID(requestId));
-        return "redirect:/allRequest";
+        return "redirect:/allRequests";
     }
 
     @GetMapping("/searchResults")
