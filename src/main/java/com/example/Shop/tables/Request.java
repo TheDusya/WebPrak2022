@@ -47,7 +47,10 @@ public class Request {
     public String getCur_state() { return cur_state; }
     public Date getRegistration_time() { return registration_time; }
     public Date getDelivery_time() { return delivery_time; }
-    public Integer getDelivery_cost() { return delivery_cost; }
+    public Integer getDelivery_cost() {
+        if (delivery_cost==null) return 0;
+        return delivery_cost;
+    }
     public String getDelivery_address() { return delivery_address; }
 
     public void setRequest_id(Long request_id) { this.request_id=request_id; }

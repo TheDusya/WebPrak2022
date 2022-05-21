@@ -14,6 +14,7 @@
 
     <script>
         function func() {
+            if (document.getElementById("f_creator").value==null) alert ("Выберите клиента!")
             var adr= '/saveRequest?requestId='+document.getElementById("f_requestId").value +
                 '&creator='+document.getElementById("f_creator").value +
                 '&state='+document.getElementById("f_state").value;
@@ -22,6 +23,29 @@
                 if (document.getElementById("f_cost").value!="") adr+= '&cost='+document.getElementById("f_cost").value;
                 if (document.getElementById("f_adr").value!="") adr+= '&address='+document.getElementById("f_adr").value;
             window.location.href=encodeURI(adr);
+        }
+        function addFunc(good_id, request){
+            var field = "f_num"+good_id.toString();
+            if (document.getElementById(field).value==null) alert ("Не выбрано количество!");
+            else if (request==null) alert ("Сначала завершите создание запроса!");
+            else {
+                var res = '/addGood?goodId=' + good_id.toString() + '&requestId=' + request.toString() +
+                    '&amount=' + document.getElementById(field).value.toString();
+                window.location.href=encodeURI(res);
+            }
+        }
+        function addNewFunc(request){
+            if (document.getElementById("f_add").value==null) alert ("Не выбрано количество!");
+            else if (request==null) alert ("Сначала завершите создание запроса!");
+            else {
+                var res = '/addGood?goodId=' + document.getElementById("f_goods").value +
+                    '&requestId=' + request.toString() +
+                    '&amount=' + document.getElementById("f_add").value.toString();
+                window.location.href=encodeURI(res);
+            }
+        }
+        function justAlert(){
+            alert("Сначала сохраните заказ!");
         }
     </script>
     <title></title>
@@ -34,20 +58,50 @@
 <div class="indent">
     <p id="requestInfo">
     <p> ID: <input type="text" id="f_requestId" th:value="${request.getRequest_id()}" /></p>
-    <p> Оформил: <input type="text" id="f_creator" th:value="${login}" /></p>
+    <p> Оформил: <input type="text" id="f_creator" th:value="${login==null ? request.getClient().getLogin(): login}" /></p>
+
     <p> Состояние:
-        <select id="f_state"th:value="${request.getCur_state()}">
+        <select id="f_state" th:value="${request.getCur_state()}">
             <option value="received">Получен</option>
             <option value="assembled">В сборке</option>
             <option value="on_the_way">В пути</option>
             <option value="cancelled">Отменён</option>
         </select></p>
 
+    <div th:each="goodBought, iter: ${goodBoughtService.getGoodsBoughtByRequest(request)}">
+        <a>
+            <span th:href="'/good?goodId=' + ${goodBought.getGood_bought_id()}"
+                  th:text="${goodBought.getGood().getManufacturer()} + ' ' + ${goodBought.getGood().getModel()} + ' (' +
+             ${goodBought.getGood().getKind()} + ') - ' + ${goodBought.getAmount()} + ' штук.  ' + ${!iter.last ? ';' : ''}">
+                </span>
+            <input type="number" th:id = "'f_num' + ${goodBought.getGood().getGood_id()}" min=0 th:value="${goodBought.getAmount()}">
+                <button style="color: black; height: 30px; width: 105px; background-color: khaki; text-align: center"
+                        th:onclick="|addFunc('${goodBought.getGood().getGood_id()}', '${goodBought.getRequest().getRequest_id()}' ); return false;| "
+                        href="fallback.html" class="btn_ch"><b>Изменить</b></button>
+        </a>
+        </br>
+    </div>
 
+    <div th:if="${request.getRequest_id()!=null}">
+        <h3>Добавить товар:</h3>
+        <p>
+            <select id="f_goods">
+            <option th:each="good, iter: ${goodService.getAllGoods()}"
+                    th:value="${good.getGood_id()}"
+                    th:text="${good.getManufacturer()} +' ' + ${good.getModel()}"></option>
+            </select>
+            <input type="number" value=0 min="0" th:id = "'f_add'">
+            <button style="color: black; height: 30px; width: 105px; background-color: khaki; text-align: center"
+                    th:onclick="|addNewFunc('${request.getRequest_id()}'); return false;|"
+                    href="fallback.html" class="btn_ch"><b>Добавить</b></button>
+        </p>
+    </div>
     <p> Время составления заказа: <input type="date" id="f_req" th:value="${request.getRegistration_time()}" /></p>
     <p> Время доставки заказа: <input type="date" id="f_del" th:value="${request.getDelivery_time()}" /></p>
     <p> Адрес: <input type="text" id="f_adr" th:value="${request.getDelivery_address()}" /></p>
     <p> Cтоимость доставки: <input type="text" id="f_cost" th:value="${request.getDelivery_cost()}" /></p>
+    <h3 th:if="${request.getRequest_id()==null}">Для добавления товаров сначала сохраните заказ!</h3>
+
 
 </div>
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">

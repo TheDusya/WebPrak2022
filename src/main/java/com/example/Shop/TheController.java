@@ -10,6 +10,7 @@ import com.example.Shop.DAO.Implementations.DAOGoodImpl;
 import com.example.Shop.DAO.Implementations.DAORequestImpl;
 import com.example.Shop.tables.Client;
 import com.example.Shop.tables.Good;
+import com.example.Shop.tables.GoodBought;
 import com.example.Shop.tables.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -317,6 +318,24 @@ public class TheController {
         return "redirect:/allRequests";
     }
 
+    @GetMapping("/addGood")
+    public String editRequestPage(@RequestParam(name = "goodId") Long goodId,
+                                  @RequestParam(name = "requestId") Long requestId,
+                                  @RequestParam(name = "amount") Integer amount,
+                                  Model model) {
+        var rg = GBDAO.reqAndGood(goodId, requestId);
+        GoodBought goodBought;
+        if (rg!=null){
+            goodBought = new GoodBought(rg.getGood_bought_id(), RDAO.getRequestByID(requestId), GDAO.getGoodByID(goodId), amount);
+            GBDAO.updateGoodBought(goodBought);
+        }
+        else {
+            goodBought = new GoodBought(RDAO.getRequestByID(requestId), GDAO.getGoodByID(goodId), amount);
+            GBDAO.addGoodBought(goodBought);
+        }
+        return "redirect:/editRequest?requestId="+requestId;
+    }
+
     @GetMapping("/searchResults")
     public String ResultsPage(@RequestParam(name = "request", required = true)String request, Model model) {
         List<Good> goods =GDAO.searchGoods(request);
@@ -324,6 +343,8 @@ public class TheController {
         model.addAttribute("goods", goods);
         return "searchResults";
     }
+
+
 
     @PostMapping("/fragments")
     public String forFragments(Model model) {
@@ -333,12 +354,6 @@ public class TheController {
                 "Вентилятор", "Стиральная машина", "Видеокарта", "Приставка");
         model.addAttribute("kinds", kinds);
         return "fragments";
-    }
-
-    @PostMapping("/catalogue")
-    public String cataloguePage(@RequestParam(name = "goodId") Long goodId) {
-        GDAO.deleteGood(GDAO.getGoodByID(goodId));
-        return "redirect:/allGoods";
     }
 
 }

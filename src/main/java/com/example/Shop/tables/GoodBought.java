@@ -54,6 +54,15 @@ public class GoodBought {
         if (good.getPrice()!=null && amount!=null)this.actualPrice = good.getPrice()*amount;
         else  this.actualPrice = null;
     }
+
+    public GoodBought(Long good_bought_id, Request request, Good good, Integer amount){
+        this.good_bought_id = good_bought_id;
+        this.request=request;
+        this.good = good;
+        this.amount = amount;
+        if (good.getPrice()!=null && amount!=null)this.actualPrice = good.getPrice()*amount;
+        else  this.actualPrice = null;
+    }
     public GoodBought(){}
 
     @Override

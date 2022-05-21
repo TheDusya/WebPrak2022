@@ -2,6 +2,7 @@ package com.example.Shop.DAO.Implementations;
 
 import com.example.Shop.DAO.DAOGood;
 import com.example.Shop.DAO.DAOGoodBought;
+import com.example.Shop.DAO.DAORequest;
 import com.example.Shop.util.DAOFactory;
 import com.example.Shop.tables.Good;
 import com.example.Shop.tables.GoodBought;
@@ -12,12 +13,26 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
 @Getter
 public class DAOGoodBoughtImpl implements DAOGoodBought {
 
+    public <T> T intersection(List<T> list1, List<T> list2) {
+        if (list1==null || list2==null) return null;
+        List<T> list = new ArrayList<T>();
+
+        for (T t : list1) {
+            if(list2.contains(t)) {
+                list.add(t);
+            }
+        }
+
+        if (list==null || list.size()==0) return null;
+        return list.get(0);
+    }
     @Override
     public void addGoodBought(GoodBought goodBought) {
         Session session = HibernateUtil.getSessionFactory().openSession();
@@ -31,7 +46,8 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
     public void updateGoodBought(GoodBought goodBought) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        session.update(goodBought);
+        if (goodBought.getAmount()==0)session.delete(goodBought);
+        else session.update(goodBought);
         session.getTransaction().commit();
         session.close();
     }
@@ -110,5 +126,12 @@ public class DAOGoodBoughtImpl implements DAOGoodBought {
         }
         return ans;
     }
-
+    @Override
+    public GoodBought reqAndGood(Long goodId, Long reqId){
+        DAOGood gdao = DAOFactory.getInstance().getGDAO();
+        DAORequest rdao = DAOFactory.getInstance().getRDAO();
+        List<GoodBought> g = getGoodsBoughtByGood(gdao.getGoodByID(goodId));
+        List<GoodBought> r = getGoodsBoughtByRequest(rdao.getRequestByID(reqId));
+        return (intersection(g, r));
+    }
 }
