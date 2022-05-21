@@ -45,9 +45,10 @@
                 <input type="hidden" name="clientId" th:value="${client.getClient_id()}"/>
                 <button style="color: black" id="deleteButton" type="submit" class="btn btn-secondary bg-warning"><b>Удалить</b></button>
             </form>
-            <form method="post" action="/editRequest">
-                <input type="hidden" name="clientId"/>
-                <button style="color: black" id="requestButton" type="submit" class="btn btn-secondary bg-warning"><b>Добавить заказ</b></button>
+            <form method="get" th:action="'/editRequest'">
+                <input type="hidden" name="login" th:value="${client.getLogin()}"/>
+                <button style="color: black" id="requestButton" type="submit"
+                        class="btn btn-secondary bg-warning"><b>Добавить заказ</b></button>
             </form>
         </div>
     </div>

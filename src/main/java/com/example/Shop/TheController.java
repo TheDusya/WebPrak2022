@@ -250,7 +250,9 @@ public class TheController {
     }
 
     @GetMapping("/editRequest")
-    public String editRequestPage(@RequestParam(name = "requestId", required = false) Long requestId, Model model) {
+    public String editRequestPage(@RequestParam(name = "requestId", required = false) Long requestId,
+                                  @RequestParam(name = "login", required = false) String login,
+                                  Model model) {
         //return "allGoods";
         Request request = new Request();
         if (requestId != null) request = RDAO.getRequestByID(requestId);
@@ -259,6 +261,7 @@ public class TheController {
             return "error";
         }
         model.addAttribute("request", request);
+        model.addAttribute("login", login);
         model.addAttribute("goods", GBDAO.getGoodsBoughtByRequest(request));
         model.addAttribute("requestService", RDAO);
         model.addAttribute("goodService", GDAO);

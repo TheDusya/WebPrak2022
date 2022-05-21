@@ -64,15 +64,7 @@ public class Request {
         DAORequest rdao = DAOFactory.getInstance().getRDAO();
         DAOGoodBought gbdao = DAOFactory.getInstance().getGBDAO();
         HashMapConverter hashMapConverter = new HashMapConverter();
-        String ans = "Request [ID: " + request_id +
-                ", client login: " + client.getLogin() +
-                ", client name: " + client.getReal_name() +
-                ", sum: " + rdao.getCost(this) +
-                ", " + gbdao.getGoodsBoughtByRequest(this) +
-                ", current state: " + cur_state +
-                ", registered: " + registration_time +
-                ", delivered: " + delivery_time +
-                ", delivery address: " + delivery_address + "]";
+        String ans = "Request";
         return ans;
     }
 
