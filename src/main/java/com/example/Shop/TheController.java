@@ -98,14 +98,14 @@ public class TheController {
     }
 
     @GetMapping("/saveClient")
-    public String saveClientPage(@RequestParam(name = "clientId") Long clientId,
+    public String saveClientPage(@RequestParam(name = "clientId", required = false) Long clientId,
                                  @RequestParam(name = "login") String login,
                                  @RequestParam(name = "password") String password,
                                  @RequestParam(name = "real_name") String real_name,
                                  @RequestParam(name = "is_admin") String is_admin,
-                                 @RequestParam(name = "mail") String mail,
-                                 @RequestParam(name = "address") String address,
-                                 @RequestParam(name = "phone") String phone,
+                                 @RequestParam(name = "mail", required = false) String mail,
+                                 @RequestParam(name = "address", required = false) String address,
+                                 @RequestParam(name = "phone", required = false) String phone,
                                  Model model) {
 
 

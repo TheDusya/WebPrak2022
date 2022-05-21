@@ -18,10 +18,10 @@
                 '&login='+document.getElementById("f_login").value +
                 '&password='+document.getElementById("f_pass").value +
                 '&real_name='+document.getElementById("f_name").value +
-                '&is_admin='+document.getElementById("f_adm").value +
-                '&mail='+document.getElementById("f_mail").value +
-                '&address='+document.getElementById("f_adr").value +
-                '&phone='+document.getElementById("f_phone").value
+                '&is_admin='+document.getElementById("f_adm").value.toString();
+                if (document.getElementById("f_mail")!=null) adr+= '&mail='+document.getElementById("f_mail").value;
+                if (document.getElementById("f_adr")!=null) adr+= '&address='+document.getElementById("f_adr").value;
+                if (document.getElementById("f_phone")!=null) adr+= '&phone='+document.getElementById("f_phone").value
             window.location.href=encodeURI(adr);
         }
     </script>
@@ -35,20 +35,21 @@
 <div class="indent">
 
     <p id="clientInfo">
-    <p> ID: <input type="text" id="f_clientId" th:value="${client.getClient_id()}" /></p>
-    <p> Логин: <input type="text" id="f_login" th:value="${client.getLogin()}" /></p>
-    <p> Пароль: <input type="text" id="f_pass" th:value="${client.getPass()}" /></p>
-    <p> Имя: <input type="text" id="f_name" th:value="${client.getReal_name()}" /></p>
-    <p> Администраторские права:
+        <p> ID: <input type="text" id="f_clientId" th:value="${client.getClient_id()}" /></p>
+        <p> Логин: <input type="text" id="f_login" th:value="${client.getLogin()}" /></p>
+        <p> Пароль: <input type="text" id="f_pass" th:value="${client.getPass()}" /></p>
+        <p> Имя: <input type="text" id="f_name" th:value="${client.getReal_name()}"/></p>
+        <p> Администраторские права:
 
-        <select id="f_adm"  th:value="${client.getIs_admin()}">
-            <option value="true">Есть</option>
-            <option value="false">Нет</option>
-        </select></p>
+            <select id="f_adm"  th:value="${client.getIs_admin()}">
+                <option value="true">Есть</option>
+                <option value="false">Нет</option>
+            </select></p>
     <p> Почта: <input type="text" id="f_mail" th:value="${client.getMail()}" /></p>
     <p> Адрес: <input type="text" id="f_adr" th:value="${client.getAddress()}" /></p>
     <p> Телефон: <input type="text" id="f_phone" th:value="${client.getPhone()}" /></p>
 </div>
+
 
 <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
     <div class="btn-group mr-2" role="group" aria-label="First group">
@@ -60,7 +61,6 @@
         </form>
     </div>
 </div>
-
 </div>
 
 </body>

@@ -18,10 +18,10 @@
                 '&manufacturer='+document.getElementById("f_manufacturer").value +
                 '&model='+document.getElementById("f_model").value +
                 '&kind='+document.getElementById("f_kind").value +
-                '&chars='+document.getElementById("f_chars").value +
                 '&price='+document.getElementById("f_price").value +
-                '&in_stock='+document.getElementById("f_in_stock").value +
-                '&country='+document.getElementById("f_country").value
+                '&in_stock='+document.getElementById("f_in_stock").value;
+                if (document.getElementById("f_chars")!=null) adr+='&chars='+document.getElementById("f_chars").value;
+                if (document.getElementById("f_country")!=null) adr+= '&country='+document.getElementById("f_country").value
             window.location.href=encodeURI(adr);
             }
     </script>

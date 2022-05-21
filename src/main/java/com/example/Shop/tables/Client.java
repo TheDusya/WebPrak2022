@@ -49,7 +49,7 @@ public class Client {
     public String getPass() { return pass; }
     public String getReal_name() { return real_name; }
     public Boolean getIs_admin() { return is_admin; }
-    public String getAddress() { return address.toString(); }
+    public String getAddress() { return address; }
     public String getMail() { return mail; }
     public String getPhone() { return phone; }
     //*/
