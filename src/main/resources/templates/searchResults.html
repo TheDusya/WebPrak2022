@@ -18,12 +18,13 @@
 <body>
 <div th:insert="fragments :: navbar"> </div>
 <div class="indent">
+
   <h3 th:if="${request == null || request.length()==0}">Введен пустой поисковой запрос!</h3>
   <div th:if="${request != null && request.length()!=0}">
-    <h3 th:if="${request != null}"><span th:text="'Результаты поиска по запросу «' + ${request} + '»:'"></span></h3>
+    <h3 id="search_header" th:if="${request != null}"><span th:text="'Результаты поиска по запросу «' + ${request} + '»:'"></span></h3>
     <p>
-    <h5 th:if="${goods == null || goods.size()==0}">Пока ничего нет:(</h5>
-    <div th:each="good, iter: ${goods}">
+    <h5 id="search_header2" th:if="${goods == null || goods.size()==0}">Пока ничего нет:(</h5>
+    <div th:if="${goods != null && goods.size()!=0}" th:each="good, iter: ${goods}">
       <a th:href="'/good?goodId=' + ${good.getGood_id()}">
                   <span th:text="${good.getManufacturer()} + ' ' + ${good.getModel()} + ' (' +
                    ${good.getKind()} + ')' + ${!iter.last ? ';' : ''}"></span>
@@ -34,6 +35,5 @@
   </div>
 </div>
 <div th:insert="fragments :: script"> </div>
-
 </body>
 </html>

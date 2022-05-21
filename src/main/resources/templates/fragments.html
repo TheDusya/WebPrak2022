@@ -24,8 +24,10 @@
 <div th:fragment="navbar">
 <nav class="navbar navbar-expand-lg navbar-light bg-warning" style="font-size: 0.8rem">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/"><b>TECH</b>shop</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" id="b_Main" href="/"><b>TECH</b>shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -65,7 +67,8 @@
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" id="search-panel" placeholder="Поиск по сайту" aria-label="Найти">
-                <button class="btn btn-outline-success btn-dark btn-outline-warning"  onClick="func(); return false;" href="fallback.html"  type="submit">Search</button>
+                <button class="btn btn-outline-success btn-dark btn-outline-warning"  id="search-button"
+                        onClick="func(); return false;" href="fallback.html"  type="submit">Search</button>
             </form>
         </div>
     </div>

@@ -58,8 +58,8 @@
 <div class="indent">
     <p id="requestInfo">
     <p> ID: <input type="text" id="f_requestId" th:value="${request.getRequest_id()}" /></p>
-    <p> Оформил: <input type="text" id="f_creator" th:value="${login==null ? request.getClient().getLogin(): login}" /></p>
-
+    <!p> Оформил: <input type="text" id="f_creator"
+                          th:value="${login==null ? (request.getClient()==null ? '':request.getClient().getLogin()): login}" /></p>
     <p> Состояние:
         <select id="f_state" th:value="${request.getCur_state()}">
             <option value="received">Получен</option>
@@ -75,13 +75,12 @@
              ${goodBought.getGood().getKind()} + ') - ' + ${goodBought.getAmount()} + ' штук.  ' + ${!iter.last ? ';' : ''}">
                 </span>
             <input type="number" th:id = "'f_num' + ${goodBought.getGood().getGood_id()}" min=0 th:value="${goodBought.getAmount()}">
-                <button style="color: black; height: 30px; width: 105px; background-color: khaki; text-align: center"
+                <button id="b_num" style="color: black; height: 30px; width: 105px; background-color: khaki; text-align: center"
                         th:onclick="|addFunc('${goodBought.getGood().getGood_id()}', '${goodBought.getRequest().getRequest_id()}' ); return false;| "
                         href="fallback.html" class="btn_ch"><b>Изменить</b></button>
         </a>
         </br>
     </div>
-
     <div th:if="${request.getRequest_id()!=null}">
         <h3>Добавить товар:</h3>
         <p>
@@ -91,7 +90,7 @@
                     th:text="${good.getManufacturer()} +' ' + ${good.getModel()}"></option>
             </select>
             <input type="number" value=0 min="0" th:id = "'f_add'">
-            <button style="color: black; height: 30px; width: 105px; background-color: khaki; text-align: center"
+            <button id="b_add" style="color: black; height: 30px; width: 105px; background-color: khaki; text-align: center"
                     th:onclick="|addNewFunc('${request.getRequest_id()}'); return false;|"
                     href="fallback.html" class="btn_ch"><b>Добавить</b></button>
         </p>
@@ -100,7 +99,7 @@
     <p> Время доставки заказа: <input type="date" id="f_del" th:value="${request.getDelivery_time()}" /></p>
     <p> Адрес: <input type="text" id="f_adr" th:value="${request.getDelivery_address()}" /></p>
     <p> Cтоимость доставки: <input type="text" id="f_cost" th:value="${request.getDelivery_cost()}" /></p>
-    <h3 th:if="${request.getRequest_id()==null}">Для добавления товаров сначала сохраните заказ!</h3>
+    <h3 th:if="${request==null || request.getRequest_id()==null}">Для добавления товаров сначала сохраните заказ!</h3>
 
 
 </div>

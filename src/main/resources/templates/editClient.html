@@ -42,8 +42,8 @@
         <p> Администраторские права:
 
             <select id="f_adm"  th:value="${client.getIs_admin()}">
-                <option value="true">Есть</option>
                 <option value="false">Нет</option>
+                <option value="true">Есть</option>
             </select></p>
     <p> Почта: <input type="text" id="f_mail" th:value="${client.getMail()}" /></p>
     <p> Адрес: <input type="text" id="f_adr" th:value="${client.getAddress()}" /></p>

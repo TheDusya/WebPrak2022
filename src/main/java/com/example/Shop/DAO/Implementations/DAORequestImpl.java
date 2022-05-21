@@ -38,6 +38,9 @@ public class DAORequestImpl implements DAORequest {
     public void deleteRequest(Request request) {
         Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
+        DAOGoodBought GBDAO = DAOFactory.getInstance().getGBDAO();;
+        var goodsBought = GBDAO.getGoodsBoughtByRequest(request);
+        if (goodsBought!=null) for (var gb : goodsBought) GBDAO.deleteGoodBought(gb);
         session.delete(request);
         session.getTransaction().commit();
         session.close();

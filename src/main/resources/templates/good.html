@@ -23,7 +23,7 @@
         <h3 th:text="${good.getManufacturer()} + ' '+ ${good.getModel()}"></h3>
         <h4 th:text="${good.getKind()}"></h4>
         <p th:if="${good.getCountry() != null}" th:text="'Страна производства: ' + ${good.getCountry()}"></p>
-        <p th:if="${good.getIn_stock()!= null}" th:text="'В наличии: ' + ${good.getIn_stock()} + ' шт.'"></p>
+        <p id="f_in_stock" th:if="${good.getIn_stock()!= null}" th:text="'В наличии: ' + ${good.getIn_stock()} + ' шт.'"></p>
         <p th:if="${good.getChars() != null}" th:text="'Прочие характеристики: '"></p>
         <i><p style="margin-left: 40px" th:if="${good.getChars() != null}" th:text="${good.getChars()} + '.'"></p></i>
         <h5 th:if="${good.getPrice() != null}" th:text="'Цена: ' + ${good.getPrice()} + ' рублей.'"></h5>

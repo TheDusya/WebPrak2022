@@ -128,14 +128,17 @@ public class TheController {
             CDAO.addClient(client);
         }
 
-        return "redirect:/allClients";
+        if(client.getClient_id()==null)return "redirect:/allClients";
+        return "redirect:/client?clientId="+client.getClient_id();
 
     }
 
     @PostMapping("/removeClient")
     public String removeClientPage(@RequestParam(name = "clientId") Long clientId) {
+        var reqs = RDAO.getRequestsByClient(CDAO.getClientByID(clientId));
+        if (reqs!=null) for (var req : reqs) RDAO.deleteRequest(req);
         CDAO.deleteClient(CDAO.getClientByID(clientId));
-        return "redirect:/clients";
+        return "redirect:/allClients";
     }
 
     @GetMapping("/allGoods")
@@ -215,7 +218,8 @@ public class TheController {
             GDAO.addGood(good);
         }
 
-        return "redirect:/allGoods";
+        if (good.getGood_id()==null)return "redirect:/allGoods";
+        return "redirect:/good?goodId="+good.getGood_id();
     }
 
     @PostMapping("/removeGood")
@@ -256,11 +260,14 @@ public class TheController {
                                   Model model) {
         //return "allGoods";
         Request request = new Request();
-        if (requestId != null) request = RDAO.getRequestByID(requestId);
-        if (request == null) {
-            model.addAttribute("error_msg", "Нет товара с с ID = " + requestId);
-            return "error";
+        if (requestId != null){
+            request = RDAO.getRequestByID(requestId);
+            if (request == null) {
+                model.addAttribute("error_msg", "Нет товара с с ID = " + requestId);
+                return "error";
+            }
         }
+
         model.addAttribute("request", request);
         model.addAttribute("login", login);
         model.addAttribute("goods", GBDAO.getGoodsBoughtByRequest(request));
@@ -309,7 +316,8 @@ public class TheController {
             RDAO.addRequest(request);
         }
 
-        return "redirect:/allRequests";
+        if (request.getRequest_id()==null)return "redirect:/allRequest";
+        return "redirect:/request?requestId="+request.getRequest_id();
     }
 
     @PostMapping("/removeRequest")
