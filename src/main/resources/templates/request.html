@@ -42,12 +42,12 @@
                 <span th:if="${goodBought != null}" th:text="${goodBought.getGood().getKind()} + ' ' +
                 ${goodBought.getGood().getManufacturer()} + ' ' +
                 ${goodBought.getGood().getModel()} + ' - ' + ${goodBought.getAmount()} + 'шт.'"></span>
-                <i><span  th:if="${goodBought.getActualPrice() != null}" th:text="'('+${goodBought.getActualPrice()} + ' рублей)'"></span></br></i>
+                <span  th:if="${goodBought.getActualPrice() != null}" th:text="'('+${goodBought.getActualPrice()} + ' рублей)'"></span></br>
             </a>
         </p>
     </div>
     <p th:if="${request.getDelivery_cost() != null}" th:text="'Цена доставки: ' + ${request.getDelivery_cost()} + ' рублей.'"></p>
-    <h5 th:text="'Общая стоимость: ' + ${requestService.getCost(request)+request.getDelivery_cost()} + ' рублей.'"></h5>
+    <h5 th:text="'Общая стоимость: ' + ${requestService.getCost(request)} + ' рублей.'"></h5>
 
     <!--edit delete order button group-->
 
